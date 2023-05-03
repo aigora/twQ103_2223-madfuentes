@@ -24,20 +24,60 @@ struct distrito cargar_fichero_nuevo(char nombre_fichero[32]));
 
 //MENÚ
 int main (){
-	int option;
-	printf("BIENVENIDO AL REGISTRO DE CALIDAD Y PROPIEDADES DE FUENTES DE MADFUENTES:\n");
+	char option;
+	int a;
+	printf("Bienvenido al menú del programa de registro de fuentes MADFUENTES.\n");
+	printf("__________________________________________________________________\n");
 	printf("¿Qué desea hacer?\n");
-	printf("-Consultar información sobre las fuentes (PRESIONE 1)\n");
-	printf("-Modificar información sobre las fuentes (PRESIONE 2)\n");
-	scanf("%c",&option);
-	switch (option){
-		case '1':
-			printf("A");//EL PROGRAMA IMPRIME LOS DATOS GUARDADOS
-	}
-	switch (option){
-		case '2':
-			printf("B");//EL PRONGRMA IMPREIME LOS DATOS GUARDADOS Y LE PIDE AL USUARIO QUE DESEA CAMBIAR
-	}
+	printf("_________________\n");
+	printf("\n");
+	printf("A-Consultar lista.\n");
+	printf("\n");
+	printf("B-Cargar ficheros.\n");
+	printf("\n");
+	printf("C-Mostrar estadísticas.\n");
+	printf("\n");
+	printf("D-Cerrar programa.\n");
+	printf("\n");
+	do{
+		scanf("%c",&option);
+			switch(option){
+				case 'A':
+				case 'a':
+					printf("\n");
+					printf("IMPRIMIENDO LA LISTA DE FUENTES\n");
+					printf("\n");
+					a=1;
+					break;
+				case 'B':
+				case 'b':
+					printf("\n");
+					printf("CARGANDO LOS FICHEROS\n");
+					printf("\n");
+					a=1;		
+					break;
+				case 'C':
+				case 'c':
+					printf("\n");
+					printf("MOSTRANDO ESTADÍSTICAS\n");
+					printf("\n");
+					a=1;
+					break;
+				case 'D':
+				case 'd':
+					printf("\n");
+					printf("CERRANDO PROGRAMA\n");
+					printf("\n");
+					a=1;
+					break;
+				default:
+					printf("\n");
+					printf("ERROR, la opción elegida no está disponible, vuleva a introducir una opción valida");
+					printf("\n");
+					a=0;	
+					break;	
+			}
+	} while(a != 1);
 	return 0;
 }
 
