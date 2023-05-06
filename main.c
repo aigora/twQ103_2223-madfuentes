@@ -21,6 +21,7 @@ struct distrito {
 
 /* Declaracion de Funciones auxiliares */
 struct distrito cargar_fichero_nuevo(char nombre_fichero[32]));
+struct estadisticas obtener_valores_estadisticos(float datos_estadistica[50],num_fuentes);
 
 //MENÚ
 int main (){
@@ -130,6 +131,67 @@ struct distrito cargar_fichero_nuevo(char nombre_fichero[32]) {
         j++;
     }
     mi_distrito.num_fuentes=j;
+	
+    fclose(fichero_nuevo)
 
     return mi_distrito;
 }
+
+struct estadisticas obtener_valores_estadisticos(float datos_estadistica[50],num_fuentes)
+{
+    struct estadisticas mi_estadistica;
+    int i, j, suma=0, contador_moda=0;
+    float media, aux, maximo=datos_estadistica[0], minimo=datos_estadistica[0], mediana, moda=datos_estadistica[0];
+
+    /*Calculamos la media*/
+    for (i=0;i<num_fuentes;i++) {
+        suma+=datos_estadistica[i];
+    }
+    media=suma/num_fuentes;
+    mi_estadistica.media=media;
+
+    /*Calculamos el maximo*/
+    for (i=1;i=num_fuentes;i++){
+        if datos_estadistica[i]>maximo
+            maximo=datos_estadistica[i];
+    }
+    mi_estadistica.maximo=maximo;
+
+     /*Calculamos el minimo*/
+    for (i=1;i=num_fuentes;i++){
+        if datos_estadistica[i]<minimo
+            minimo=datos_estadistica[i];
+    }
+    mi_estadistica.minimo=minimo;
+
+     /*Calculamos la mediana*/
+    for (i=0;i<num_fuentes;i++){
+            for (j=i+1;j<num_fuentes+1;j++){
+                if (datos_estadistica[i]>datos_estadistica[j])
+                {
+                    aux=datos_estadistica[i];
+                    datos_estadistica[i]=datos_estadistica[j];
+                    datos_estadistica[j]=aux;
+                }
+            }
+
+    }
+    mediana=datos_estadistica[int(num_fuentes/2)];
+    mi_estadistica.mediana=mediana;
+
+    /*Calculamos la moda */
+    for (i=0;i<num_fuentes;i++){
+            int contador_temporal = 0;
+            for (j=i+1;j<num_fuentes+1;j++){
+                if (datos_estadistica[j]=datos_estadistica[i])
+                    contador_temporal++;
+            }
+            if (contador_moda<contador_temporal)
+                moda=datos_estadistica[i];
+
+    }
+    mi_estadistica.moda=moda;
+
+    return mi_estadistica;
+}
+
