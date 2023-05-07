@@ -46,19 +46,19 @@ int main (){
 					printf("\n");
 					printf("CARGANDO FICHEROS\n");
 					printf("\n");
-					mostrar_menu=0;
+					mostrar_menu=1;
 					break;
 				case '2':
 					printf("\n");
 					printf("IMPRIMIENDO LA LISTA DE FUENTES\n");
 					printf("\n");
-					mostrar_menu=0;		
+					mostrar_menu=1;		
 					break;
 				case '3':
 					printf("\n");
 					printf("MOSTRANDO ESTADÍSTICAS\n");
 					printf("\n");
-					mostrar_menu=0;
+					mostrar_menu=1;
 					break;
 				case '4':
 					printf("\n");
