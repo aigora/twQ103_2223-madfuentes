@@ -25,7 +25,7 @@ struct estadisticas obtener_valores_estadisticos(float datos_estadistica[50],num
 
 //MENÚ
 int main (){
-	int option,a;
+	int option,mostrar_menu;
 	printf("Bienvenido al menu del programa de registro de fuentes MADFUENTES.\n");
 	printf("__________________________________________________________________\n");
 	printf("Que desea hacer?\n");
@@ -46,34 +46,34 @@ int main (){
 					printf("\n");
 					printf("CARGANDO FICHEROS\n");
 					printf("\n");
-					a=1;
+					mostrar_menu=0;
 					break;
 				case '2':
 					printf("\n");
 					printf("IMPRIMIENDO LA LISTA DE FUENTES\n");
 					printf("\n");
-					a=1;		
+					mostrar_menu=0;		
 					break;
 				case '3':
 					printf("\n");
 					printf("MOSTRANDO ESTADÍSTICAS\n");
 					printf("\n");
-					a=1;
+					mostrar_menu=0;
 					break;
 				case '4':
 					printf("\n");
 					printf("CERRANDO PROGRAMA\n");
 					printf("\n");
-					a=1;
+					mostrar_menu=0;
 					break;
 				default:
 					printf("\n");
 					printf("ERROR, la opción elegida no está disponible, vuleva a introducir una opción valida");
 					printf("\n");
-					a=0;	
+					mostrar_menu=1;	
 					break;	
 			}
-	} while(a != 1);
+	} while(mostrar_menu = 1);
 	return 0;
 }
 
