@@ -25,47 +25,42 @@ struct estadisticas obtener_valores_estadisticos(float datos_estadistica[50],num
 
 //MENÚ
 int main (){
-	char option;
-	int a;
+	int option,a;
 	printf("Bienvenido al menú del programa de registro de fuentes MADFUENTES.\n");
 	printf("__________________________________________________________________\n");
 	printf("¿Qué desea hacer?\n");
 	printf("_________________\n");
 	printf("\n");
-	printf("A-Consultar lista.\n");
+	printf("1-Consultar lista.\n");
 	printf("\n");
-	printf("B-Cargar ficheros.\n");
+	printf("2-Cargar ficheros.\n");
 	printf("\n");
-	printf("C-Mostrar estadísticas.\n");
+	printf("3-Mostrar estadísticas.\n");
 	printf("\n");
-	printf("D-Cerrar programa.\n");
+	printf("4-Cerrar programa.\n");
 	printf("\n");
 	do{
 		scanf("%c",&option);
 			switch(option){
-				case 'A':
-				case 'a':
+				case '1':
 					printf("\n");
 					printf("IMPRIMIENDO LA LISTA DE FUENTES\n");
 					printf("\n");
 					a=1;
 					break;
-				case 'B':
-				case 'b':
+				case '2':
 					printf("\n");
 					printf("CARGANDO LOS FICHEROS\n");
 					printf("\n");
 					a=1;		
 					break;
-				case 'C':
-				case 'c':
+				case '3':
 					printf("\n");
 					printf("MOSTRANDO ESTADÍSTICAS\n");
 					printf("\n");
 					a=1;
 					break;
-				case 'D':
-				case 'd':
+				case '4':
 					printf("\n");
 					printf("CERRANDO PROGRAMA\n");
 					printf("\n");
