@@ -51,9 +51,10 @@ int main (){
 		scanf("%d",&option);
 			switch(option){
 				case '1':
-					printf("\n");
-					printf("CARGANDO FICHEROS\n");
-					printf("\n");
+					char nombre_fichero[32];
+                			printf("Nombre del fichero a cargar:\n);
+                			scanf("%s",nombre_fichero);
+                			distrito_cargado = cargar_fichero_nuevo(nombre_fichero);
 					mostrar_menu=1;
 					break;
 				case '2':
