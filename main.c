@@ -19,6 +19,14 @@ struct distrito {
     fuente datos_fuente[50];
 };
 
+struct estadisticas {
+    float maximo;
+    float minimo;
+    float media;
+    float mediana;
+    float moda;
+};
+
 /* Declaracion de Funciones auxiliares */
 struct distrito cargar_fichero_nuevo(char nombre_fichero[32]));
 struct estadisticas obtener_valores_estadisticos(float datos_estadistica[50],num_fuentes);
