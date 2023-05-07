@@ -188,5 +188,15 @@ struct estadisticas obtener_valores_estadisticos(float datos_estadistica[50],num
     mi_estadistica.moda=moda;
 
     return mi_estadistica;
+	
+    /*Consultar lista*/
+    void imprimir_lista(struct distrito mi_distrito) {
+    int i;
+
+    printf("%-15s %-5s %-14s %-9s %-11s\n", "Parametros", "pH", "Conductividad", "Turbidez", "Coliformes");
+    for (i=0; i<mi_distrito.num_fuentes; i++) {
+        printf("%-15s %-5.2f %-14d %-9d %-11d\n", mi_distrito.datos_fuente[i].nom_fuente, mi_distrito.datos_fuente[i].pH, mi_distrito.datos_fuente[i].conductividad, mi_distrito.datos_fuente[i].turbidez, mi_distrito.datos_fuente[i].coliformes);
+    }
+}
 }
 
