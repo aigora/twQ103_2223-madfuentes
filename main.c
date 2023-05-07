@@ -88,7 +88,7 @@ int main (){
 
 /* Definicion de funciones auxiliares */
 
-/*Función para leer el fichero de carga y transformarlo a la estructura para almacenar en el fichero general*/
+/*Función para leer el fichero de carga y transformarlo a la estructura para almacenar*/
 struct distrito cargar_fichero_nuevo(char nombre_fichero[32]) {
 
     FILE *fichero_nuevo;
@@ -156,14 +156,14 @@ struct estadisticas obtener_valores_estadisticos(float datos_estadistica[50],num
 
     /*Calculamos el maximo*/
     for (i=1;i=num_fuentes;i++){
-        if datos_estadistica[i]>maximo
+        if (datos_estadistica[i]>maximo)
             maximo=datos_estadistica[i];
     }
     mi_estadistica.maximo=maximo;
 
      /*Calculamos el minimo*/
     for (i=1;i=num_fuentes;i++){
-        if datos_estadistica[i]<minimo
+        if (datos_estadistica[i]<minimo)
             minimo=datos_estadistica[i];
     }
     mi_estadistica.minimo=minimo;
@@ -180,7 +180,7 @@ struct estadisticas obtener_valores_estadisticos(float datos_estadistica[50],num
             }
 
     }
-    mediana=datos_estadistica[int(num_fuentes/2)];
+    mediana=datos_estadistica[(int)(num_fuentes/2)];
     mi_estadistica.mediana=mediana;
 
     /*Calculamos la moda */
@@ -198,7 +198,7 @@ struct estadisticas obtener_valores_estadisticos(float datos_estadistica[50],num
 
     return mi_estadistica;
 	
-    /*Consultar lista*/
+    /*Función para imprimir el fichero*/
     void imprimir_lista(struct distrito mi_distrito) {
     int i;
 
