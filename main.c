@@ -97,27 +97,27 @@ struct distrito cargar_fichero_nuevo(char nombre_fichero[32]) {
     char temp_anio[4];
     char temp_mes[2];
     char temp_nomdistrito[26];
-
+//cogemos las cuatro primeras cifras del nombre del fichero para tener el año//
     for (i=0; i<4; i++) {
         temp_anio[i] = nombre_fichero[i];
     }
-
+//cogemos las dos siguientes para el mes//
     for (i=4; i<6; i++) {
         temp_mes[i-4] = nombre_fichero[i];
     }
-
-    for (i=6; i<32; i++) {
+//saltamos el guion en el siguiente bucle y cogemos el nombre del distrito//
+    for (i=7; i<32; i++) {
         if (nombre_fichero[i] == '.') {
-            temp_nomdistrito[i-6] = '\0';
+            temp_nomdistrito[i-7] = '\0';
             break;
         }
         else {
-            temp_nomdistrito[i-6] = nombre_fichero[i];
+            temp_nomdistrito[i-7] = nombre_fichero[i];
         }
     }
     strcpy(mi_distrito.nom_distrito,temp_nomdistrito);
-    mi_distrito.anio=atoi(temp_anio);
-    mi_distrito.mes=atoi(temp_mes);
+    mi_distrito.anio=atoi(temp_anio); //pasamos a entero
+    mi_distrito.mes=atoi(temp_mes); //pasamos a entero
 
     fichero_nuevo=fopen(nombre_fichero,"r");
     if (fichero_nuevo==NULL) //si el fichero que vamos a cargar está vacío nos da mensaje de error
