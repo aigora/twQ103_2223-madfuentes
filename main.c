@@ -28,12 +28,13 @@ struct estadisticas {
 };
 
 /* Declaracion de Funciones auxiliares */
-struct distrito cargar_fichero_nuevo(char nombre_fichero[32]));
-struct estadisticas obtener_valores_estadisticos(float datos_estadistica[50],num_fuentes);
+struct distrito cargar_fichero_nuevo(char nombre_fichero[32]);
+struct estadisticas obtener_valores_estadisticos(float datos_estadistica[50], int num_fuentes);
 
 //MENÚ
 int main (){
 	int option,mostrar_menu;
+	struct distrito distrito_cargado;
 	printf("Bienvenido al menu del programa de registro de fuentes MADFUENTES.\n");
 	printf("__________________________________________________________________\n");
 	printf("Que desea hacer?\n");
@@ -52,7 +53,7 @@ int main (){
 			switch(option){
 				case '1':
 					char nombre_fichero[32];
-                			printf("Nombre del fichero a cargar:\n);
+                			printf("Nombre del fichero a cargar:\n");
                 			scanf("%s",nombre_fichero);
                 			distrito_cargado = cargar_fichero_nuevo(nombre_fichero);
 					mostrar_menu=1;
@@ -97,15 +98,24 @@ struct distrito cargar_fichero_nuevo(char nombre_fichero[32]) {
     char temp_anio[4];
     char temp_mes[2];
     char temp_nomdistrito[26];
-//cogemos las cuatro primeras cifras del nombre del fichero para tener el año//
+    
+    //abrimos fichero
+    fichero_nuevo=fopen(nombre_fichero,"r");
+    if (fichero_nuevo==NULL) //si el fichero que vamos a cargar está vacío nos da mensaje de error
+    {
+        printf("Error al abrir el fichero\n");
+        return mi_distrito;
+    }
+    
+//cogemos las cuatro primeras cifras del nombre del fichero para tener el año
     for (i=0; i<4; i++) {
         temp_anio[i] = nombre_fichero[i];
     }
-//cogemos las dos siguientes para el mes//
+//cogemos las dos siguientes para el mes
     for (i=4; i<6; i++) {
         temp_mes[i-4] = nombre_fichero[i];
     }
-//saltamos el guion en el siguiente bucle y cogemos el nombre del distrito//
+//saltamos el guion en el siguiente bucle y cogemos el nombre del distrito
     for (i=7; i<32; i++) {
         if (nombre_fichero[i] == '.') {
             temp_nomdistrito[i-7] = '\0';
@@ -119,29 +129,22 @@ struct distrito cargar_fichero_nuevo(char nombre_fichero[32]) {
     mi_distrito.anio=atoi(temp_anio); //pasamos a entero
     mi_distrito.mes=atoi(temp_mes); //pasamos a entero
 
-    fichero_nuevo=fopen(nombre_fichero,"r");
-    if (fichero_nuevo==NULL) //si el fichero que vamos a cargar está vacío nos da mensaje de error
-    {
-        printf("Error al abrir el fichero\n");
-        return;
-    }
-
     /* Leemos y descartamos linea de cabecera */
     char cabecera[128];
     fscanf(fichero_nuevo, " %[^\n]\n", cabecera);
 
     /* Leemos y almacenamos lineas restantes */
-    while(fscanf(fichero_nuevo, "%s\t%f\t%i\t%i\t%i\n", mi_distrito.datos_fuente[i].nom_fuente, &mi_distrito.datos_fuente[i].ph, &mi_distrito.datos_fuente[i].conductividad, &mi_distrito.datos_fuente[i].turbidez, &mi_distrito.datos_fuente[i].coliformes) != EOF) {
+    while(fscanf(fichero_nuevo, "%s\t%f\t%i\t%i\t%i\n", mi_distrito.datos_fuente[i].nom_fuente, &mi_distrito.datos_fuente[i].pH, &mi_distrito.datos_fuente[i].conductividad, &mi_distrito.datos_fuente[i].turbidez, &mi_distrito.datos_fuente[i].coliformes) != EOF) {
         j++;
     }
     mi_distrito.num_fuentes=j;
 	
-    fclose(fichero_nuevo)
+    fclose(fichero_nuevo);
 
     return mi_distrito;
 }
 
-struct estadisticas obtener_valores_estadisticos(float datos_estadistica[50],num_fuentes)
+struct estadisticas obtener_valores_estadisticos(float datos_estadistica[50], int num_fuentes)
 {
     struct estadisticas mi_estadistica;
     int i, j, suma=0, contador_moda=0;
@@ -197,9 +200,10 @@ struct estadisticas obtener_valores_estadisticos(float datos_estadistica[50],num
     mi_estadistica.moda=moda;
 
     return mi_estadistica;
-	
-    /*Función para imprimir el fichero*/
-    void imprimir_lista(struct distrito mi_distrito) {
+}
+
+/*Función para imprimir el fichero*/
+void imprimir_lista(struct distrito mi_distrito) {
     int i;
 
     printf("%-15s %-5s %-14s %-9s %-11s\n", "Parametros", "pH", "Conductividad", "Turbidez", "Coliformes");
@@ -207,5 +211,3 @@ struct estadisticas obtener_valores_estadisticos(float datos_estadistica[50],num
         printf("%-15s %-5.2f %-14d %-9d %-11d\n", mi_distrito.datos_fuente[i].nom_fuente, mi_distrito.datos_fuente[i].pH, mi_distrito.datos_fuente[i].conductividad, mi_distrito.datos_fuente[i].turbidez, mi_distrito.datos_fuente[i].coliformes);
     }
 }
-}
-
