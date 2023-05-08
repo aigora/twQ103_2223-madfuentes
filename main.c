@@ -134,7 +134,7 @@ struct distrito cargar_fichero_nuevo(char nombre_fichero[32]) {
     fscanf(fichero_nuevo, " %[^\n]\n", cabecera);
 
     /* Leemos y almacenamos lineas restantes */
-    while(fscanf(fichero_nuevo, "%s\t%f\t%i\t%i\t%i\n", mi_distrito.datos_fuente[i].nom_fuente, &mi_distrito.datos_fuente[i].pH, &mi_distrito.datos_fuente[i].conductividad, &mi_distrito.datos_fuente[i].turbidez, &mi_distrito.datos_fuente[i].coliformes) != EOF) {
+    while(fscanf(fichero_nuevo, "%s\t%f\t%i\t%i\t%i\n", mi_distrito.datos_fuente[j].nom_fuente, &mi_distrito.datos_fuente[j].pH, &mi_distrito.datos_fuente[j].conductividad, &mi_distrito.datos_fuente[j].turbidez, &mi_distrito.datos_fuente[j].coliformes) != EOF) {
         j++;
     }
     mi_distrito.num_fuentes=j;
