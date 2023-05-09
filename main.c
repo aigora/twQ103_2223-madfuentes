@@ -33,57 +33,57 @@ struct estadisticas obtener_valores_estadisticos(float datos_estadistica[50], in
 
 //MENÚ
 int main (){
-	int option,mostrar_menu;
+	int option,mostrar_menu=1;
 	struct distrito distrito_cargado;
-	printf("Bienvenido al menu del programa de registro de fuentes MADFUENTES.\n");
-	printf("__________________________________________________________________\n");
-	printf("Que desea hacer?\n");
-	printf("_________________\n");
-	printf("\n");
-	printf("1-Cargar ficheros.\n");
-	printf("\n");
-	printf("2-Imprimir fichero.\n");
-	printf("\n");
-	printf("3-Mostrar estadísticas.\n");
-	printf("\n");
-	printf("4-Cerrar programa.\n");
-	printf("\n");
 	do{
+		printf("Bienvenido al menu del programa de registro de fuentes MADFUENTES.\n");
+		printf("__________________________________________________________________\n");
+		printf("Que desea hacer?\n");
+		printf("_________________\n");
+		printf("\n");
+		printf("1-Cargar ficheros.\n");
+		printf("\n");
+		printf("2-Imprimir fichero.\n");
+		printf("\n");
+		printf("3-Mostrar estadísticas.\n");
+		printf("\n");
+		printf("4-Cerrar programa.\n");
+		printf("\n");
 		scanf("%d",&option);
 			switch(option){
-				case '1':
+				case '1':{
 					char nombre_fichero[32];
                 			printf("Nombre del fichero a cargar:\n");
                 			scanf("%s",nombre_fichero);
                 			distrito_cargado = cargar_fichero_nuevo(nombre_fichero);
 					mostrar_menu=1;
-					break;
-				case '2':
+					break;}
+				case '2':{
 					printf("\n");
 					printf("IMPRIMIENDO LA LISTA DE FUENTES\n");
 					printf("\n");
 					mostrar_menu=1;		
-					break;
-				case '3':
+					break;}
+				case '3':{
 					printf("\n");
 					printf("MOSTRANDO ESTADÍSTICAS\n");
 					printf("\n");
 					mostrar_menu=1;
-					break;
-				case '4':
+					break;}
+				case '4':{
 					printf("\n");
 					printf("CERRANDO PROGRAMA\n");
 					printf("\n");
 					mostrar_menu=0;
-					break;
-				default:
+					break;}
+				default:{
 					printf("\n");
 					printf("ERROR, la opción elegida no está disponible, vuleva a introducir una opción valida");
 					printf("\n");
 					mostrar_menu=1;	
-					break;	
+					break;}
 			}
-	} while(mostrar_menu = 1);
+	} while(mostrar_menu != 0);
 	return 0;
 }
 
