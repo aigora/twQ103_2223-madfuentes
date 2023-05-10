@@ -51,26 +51,26 @@ int main (){
 		printf("\n");
 		scanf("%d",&option);
 			switch(option){
-				case '1':{
+				case 1:{
 					char nombre_fichero[32];
                 			printf("Nombre del fichero a cargar:\n");
                 			scanf("%s",nombre_fichero);
                 			distrito_cargado = cargar_fichero_nuevo(nombre_fichero);
-					mostrar_menu=1;
+					mostrar_menu=0;
 					break;}
-				case '2':{
+				case 2:{
 					printf("\n");
 					printf("IMPRIMIENDO LA LISTA DE FUENTES\n");
 					printf("\n");
-					mostrar_menu=1;		
+					mostrar_menu=0;		
 					break;}
-				case '3':{
+				case 3:{
 					printf("\n");
 					printf("MOSTRANDO ESTADÍSTICAS\n");
 					printf("\n");
-					mostrar_menu=1;
+					mostrar_menu=0;
 					break;}
-				case '4':{
+				case 4:{
 					printf("\n");
 					printf("CERRANDO PROGRAMA\n");
 					printf("\n");
@@ -78,7 +78,7 @@ int main (){
 					break;}
 				default:{
 					printf("\n");
-					printf("ERROR, la opción elegida no está disponible, vuleva a introducir una opción valida");
+					printf("ERROR, la opción elegida no está disponible, vuleva a introducir una opción valida\n");
 					printf("\n");
 					mostrar_menu=1;	
 					break;}
