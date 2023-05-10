@@ -49,9 +49,11 @@ int main (){
 		printf("\n");
 		printf("4-Cerrar programa.\n");
 		printf("\n");
+		//Le piden al usuario que desea hacer
 		scanf("%d",&option);
 			switch(option){
 				case 1:{
+					//Carga el fichero
 					char nombre_fichero[32];
                 			printf("Nombre del fichero a cargar:\n");
                 			scanf("%s",nombre_fichero);
@@ -59,24 +61,28 @@ int main (){
 					mostrar_menu=0;
 					break;}
 				case 2:{
+					//imprime la lista de fuentes
 					printf("\n");
 					printf("IMPRIMIENDO LA LISTA DE FUENTES\n");
 					printf("\n");
 					mostrar_menu=0;		
 					break;}
 				case 3:{
+					//Muestra las estadísticas
 					printf("\n");
 					printf("MOSTRANDO ESTADÍSTICAS\n");
 					printf("\n");
 					mostrar_menu=0;
 					break;}
 				case 4:{
+					//Cierra el programa
 					printf("\n");
 					printf("CERRANDO PROGRAMA\n");
 					printf("\n");
 					mostrar_menu=0;
 					break;}
 				default:{
+					//De no introducir una respuesta correcta, el programa le informa, repitiendo el bucle hasta que la opción introducida sea correcta
 					printf("\n");
 					printf("ERROR, la opción elegida no está disponible, vuleva a introducir una opción valida\n");
 					printf("\n");
