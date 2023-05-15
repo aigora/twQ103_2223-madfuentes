@@ -30,6 +30,8 @@ struct estadisticas {
 /* Declaracion de Funciones auxiliares */
 struct distrito cargar_fichero_nuevo(char nombre_fichero[32]);
 struct estadisticas obtener_valores_estadisticos(float datos_estadistica[50], int num_fuentes);
+void imprimir_valores_estadisticos(struct distrito mi_distrito);
+void imprimir_lista(struct distrito mi_distrito);
 
 //MENÚ
 int main (){
@@ -63,14 +65,14 @@ int main (){
 				case 2:{
 					//imprime la lista de fuentes
 					printf("\n");
-					printf("IMPRIMIENDO LA LISTA DE FUENTES\n");
+					imprimir_lista(distrito_cargado);
 					printf("\n");
 					mostrar_menu=0;		
 					break;}
 				case 3:{
 					//Muestra las estadísticas
 					printf("\n");
-					printf("MOSTRANDO ESTADÍSTICAS\n");
+					imprimir_valores_estadisticos(distrito_cargado);
 					printf("\n");
 					mostrar_menu=0;
 					break;}
@@ -104,7 +106,7 @@ struct distrito cargar_fichero_nuevo(char nombre_fichero[32]) {
     char temp_anio[4];
     char temp_mes[2];
     char temp_nomdistrito[26];
-    
+
     //abrimos fichero
     fichero_nuevo=fopen(nombre_fichero,"r");
     if (fichero_nuevo==NULL) //si el fichero que vamos a cargar está vacío nos da mensaje de error
@@ -112,16 +114,18 @@ struct distrito cargar_fichero_nuevo(char nombre_fichero[32]) {
         printf("Error al abrir el fichero\n");
         return mi_distrito;
     }
-    
-//cogemos las cuatro primeras cifras del nombre del fichero para tener el año
+
+    //cogemos las cuatro primeras cifras del nombre del fichero para tener el año
     for (i=0; i<4; i++) {
         temp_anio[i] = nombre_fichero[i];
     }
-//cogemos las dos siguientes para el mes
+
+    //cogemos las dos siguientes para el mes
     for (i=4; i<6; i++) {
         temp_mes[i-4] = nombre_fichero[i];
     }
-//saltamos el guion en el siguiente bucle y cogemos el nombre del distrito
+
+    //saltamos el guion en el siguiente bucle y cogemos el nombre del distrito
     for (i=7; i<32; i++) {
         if (nombre_fichero[i] == '.') {
             temp_nomdistrito[i-7] = '\0';
@@ -144,7 +148,7 @@ struct distrito cargar_fichero_nuevo(char nombre_fichero[32]) {
         j++;
     }
     mi_distrito.num_fuentes=j;
-	
+
     fclose(fichero_nuevo);
 
     return mi_distrito;
@@ -153,8 +157,9 @@ struct distrito cargar_fichero_nuevo(char nombre_fichero[32]) {
 struct estadisticas obtener_valores_estadisticos(float datos_estadistica[50], int num_fuentes)
 {
     struct estadisticas mi_estadistica;
-    int i, j, suma=0, contador_moda=0;
+    int i, j, contador_moda=0;
     float media, aux, maximo=datos_estadistica[0], minimo=datos_estadistica[0], mediana, moda=datos_estadistica[0];
+    float suma = 0.0f;
 
     /*Calculamos la media*/
     for (i=0;i<num_fuentes;i++) {
@@ -199,13 +204,55 @@ struct estadisticas obtener_valores_estadisticos(float datos_estadistica[50], in
                 if (datos_estadistica[j]==datos_estadistica[i])
                     contador_temporal++;
             }
-            if (contador_moda<contador_temporal)
+            if (contador_moda<contador_temporal){
                 moda=datos_estadistica[i];
+                contador_moda=contador_temporal;
+            }
 
     }
     mi_estadistica.moda=moda;
 
     return mi_estadistica;
+}
+
+void imprimir_valores_estadisticos(struct distrito mi_distrito)
+{
+    struct estadisticas mi_pH, mi_conductividad, mi_turbidez, mi_coliformes;
+    int i;
+    float temp_pH[50], temp_conductividad[50], temp_turbidez[50], temp_coliformes[50];
+
+    /* Inicializamos vectores temporales */
+    for (i=0; i<50; i++) {
+        temp_pH[i] = 0.0f;
+        temp_conductividad[i] = 0.0f;
+        temp_turbidez[i] = 0.0f;
+        temp_coliformes[i] = 0.0f;
+    }
+
+    /* Pasamos los datos a vectores temporales */
+    for (i=0; i<mi_distrito.num_fuentes; i++) {
+        temp_pH[i] = mi_distrito.datos_fuente[i].pH;
+        temp_conductividad[i] = (float)mi_distrito.datos_fuente[i].conductividad;
+        temp_turbidez[i] = (float)mi_distrito.datos_fuente[i].turbidez;
+        temp_coliformes[i] = (float)mi_distrito.datos_fuente[i].coliformes;
+    }
+
+    /* calculamos estadisticas para todas las fuentes del distritos por tipo */
+    mi_pH = obtener_valores_estadisticos(temp_pH, mi_distrito.num_fuentes);
+    mi_conductividad = obtener_valores_estadisticos(temp_conductividad, mi_distrito.num_fuentes);
+    mi_turbidez = obtener_valores_estadisticos(temp_turbidez, mi_distrito.num_fuentes);
+    mi_coliformes = obtener_valores_estadisticos(temp_coliformes, mi_distrito.num_fuentes);
+
+    /* Imprimimos */
+    printf("Estadisticas de %s\n\n", mi_distrito.nom_distrito);
+    printf("%-15s %-15s %-15s %-15s %-15s\n", "Parametros", "pH", "Conductividad", "Turbidez", "Coliformes");
+    printf("%-15s %-15.2f %-15.2f %-15.2f %-15.2f\n", "Maximo", mi_pH.maximo, mi_conductividad.maximo, mi_turbidez.maximo, mi_coliformes.maximo);
+    printf("%-15s %-15.2f %-15.2f %-15.2f %-15.2f\n", "Minimo", mi_pH.minimo, mi_conductividad.minimo, mi_turbidez.minimo, mi_coliformes.minimo);
+    printf("%-15s %-15.2f %-15.2f %-15.2f %-15.2f\n", "Media", mi_pH.media, mi_conductividad.media, mi_turbidez.media, mi_coliformes.media);
+    printf("%-15s %-15.2f %-15.2f %-15.2f %-15.2f\n", "Mediana", mi_pH.mediana, mi_conductividad.mediana, mi_turbidez.mediana, mi_coliformes.mediana);
+    printf("%-15s %-15.2f %-15.2f %-15.2f %-15.2f\n", "Moda", mi_pH.moda, mi_conductividad.moda, mi_turbidez.moda, mi_coliformes.moda);
+
+    return;
 }
 
 /*Función para imprimir el fichero*/
