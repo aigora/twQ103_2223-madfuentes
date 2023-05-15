@@ -60,21 +60,21 @@ int main (){
                 			printf("Nombre del fichero a cargar:\n");
                 			scanf("%s",nombre_fichero);
                 			distrito_cargado = cargar_fichero_nuevo(nombre_fichero);
-					mostrar_menu=0;
+					mostrar_menu=1;
 					break;}
 				case 2:{
 					//imprime la lista de fuentes
 					printf("\n");
 					imprimir_lista(distrito_cargado);
 					printf("\n");
-					mostrar_menu=0;		
+					mostrar_menu=1;		
 					break;}
 				case 3:{
 					//Muestra las estadísticas
 					printf("\n");
 					imprimir_valores_estadisticos(distrito_cargado);
 					printf("\n");
-					mostrar_menu=0;
+					mostrar_menu=1;
 					break;}
 				case 4:{
 					//Cierra el programa
