@@ -32,11 +32,16 @@ struct distrito cargar_fichero_nuevo(char nombre_fichero[32]);
 struct estadisticas obtener_valores_estadisticos(float datos_estadistica[50], int num_fuentes);
 void imprimir_valores_estadisticos(struct distrito mi_distrito);
 void imprimir_lista(struct distrito mi_distrito);
+void banner(void);
 
 //MENÚ
 int main (){
 	int option,mostrar_menu=1;
 	struct distrito distrito_cargado;
+	
+	/* Lanzar banner con titulo */
+        banner();
+	
 	do{
 		printf("Bienvenido al menu del programa de registro de fuentes MADFUENTES.\n");
 		printf("__________________________________________________________________\n");
@@ -263,4 +268,10 @@ void imprimir_lista(struct distrito mi_distrito) {
     for (i=0; i<mi_distrito.num_fuentes; i++) {
         printf("%-15s %-5.2f %-14d %-9d %-11d\n", mi_distrito.datos_fuente[i].nom_fuente, mi_distrito.datos_fuente[i].pH, mi_distrito.datos_fuente[i].conductividad, mi_distrito.datos_fuente[i].turbidez, mi_distrito.datos_fuente[i].coliformes);
     }
+}
+
+/*Banner*/
+void banner(void)
+{
+
 }
