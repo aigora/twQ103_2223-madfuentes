@@ -313,24 +313,4 @@ void imprimir_dato(struct distrito mi_distrito, int indice, const char* dato) {
         printf("Dato inválido\n");
     }
 }
-void imprimir_dato(struct distrito mi_distrito, int indice, const char* parametro) {
-    if (indice < 0 || indice >= mi_distrito.num_fuentes) {
-        printf("Índice inválido\n");
-        return;
-    }
 
-    printf("%-15s %-5s\n", "Parametros", parametro);
-    printf("%-15s ", mi_distrito.datos_fuente[indice].nom_fuente);
-
-    if (strcmp(parametro, "pH") == 0) {
-        printf("%-5.2f\n", mi_distrito.datos_fuente[indice].pH);
-    } else if (strcmp(parametro, "Conductividad") == 0) {
-        printf("%-14d\n", mi_distrito.datos_fuente[indice].conductividad);
-    } else if (strcmp(parametro, "Turbidez") == 0) {
-        printf("%-9d\n", mi_distrito.datos_fuente[indice].turbidez);
-    } else if (strcmp(parametro, "Coliformes") == 0) {
-        printf("%-11d\n", mi_distrito.datos_fuente[indice].coliformes);
-    } else {
-        printf("Parámetro inválido\n");
-    }
-}
