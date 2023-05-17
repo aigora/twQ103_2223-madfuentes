@@ -313,4 +313,3 @@ void imprimir_dato(struct distrito mi_distrito, int indice, const char* dato) {
         printf("Dato inválido\n");
     }
 }
-
