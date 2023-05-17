@@ -34,73 +34,87 @@ void imprimir_valores_estadisticos(struct distrito mi_distrito);
 void imprimir_lista(struct distrito mi_distrito);
 void banner(void);
 
-//MENÚ
-int main (){
-	int option,mostrar_menu=1;
-	struct distrito distrito_cargado;
-	
-	/* Lanzar banner con titulo */
-        banner();
-	
-	do{
-		printf("Bienvenido al menu del programa de registro de fuentes MADFUENTES.\n");
-		printf("__________________________________________________________________\n");
-		printf("Que desea hacer?\n");
-		printf("_________________\n");
-		printf("\n");
-		printf("1-Cargar ficheros.\n");
-		printf("\n");
-		printf("2-Imprimir fichero.\n");
-		printf("\n");
-		printf("3-Mostrar estadísticas.\n");
-		printf("\n");
-		printf("4-Cerrar programa.\n");
-		printf("\n");
-		//Le piden al usuario que desea hacer
-		scanf("%d",&option);
-			switch(option){
-				case 1:{
-					//Carga el fichero
-					char nombre_fichero[32];
-                			printf("Nombre del fichero a cargar:\n");
-                			scanf("%s",nombre_fichero);
-                			distrito_cargado = cargar_fichero_nuevo(nombre_fichero);
-					mostrar_menu=1;
-					break;}
-				case 2:{
-					//imprime la lista de fuentes
-					printf("\n");
-					imprimir_lista(distrito_cargado);
-					printf("\n");
-					mostrar_menu=1;		
-					break;}
-				case 3:{
-					//Muestra las estadísticas
-					printf("\n");
-					imprimir_valores_estadisticos(distrito_cargado);
-					printf("\n");
-					mostrar_menu=1;
-					break;}
-				case 4:{
-					//Cierra el programa
-					printf("\n");
-					printf("CERRANDO PROGRAMA\n");
-					printf("\n");
-					mostrar_menu=0;
-					break;}
-				default:{
-					//De no introducir una respuesta correcta, el programa le informa, repitiendo el bucle hasta que la opción introducida sea correcta
-					printf("\n");
-					printf("ERROR, la opción elegida no está disponible, vuleva a introducir una opción valida\n");
-					printf("\n");
-					mostrar_menu=1;	
-					break;}
-			}
-	} while(mostrar_menu != 0);
-	return 0;
+/* Función principal */
+int main()
+{
+    int option, mostrar_menu=1;
+    struct distrito distrito_cargado;
+
+    /* Lanzar banner con titulo */
+    banner();
+
+    /* Lanzamos menú con opciones */
+    do{
+        printf("Bienvenido al menu del programa de registro de fuentes MADFUENTES.\n");
+        printf("__________________________________________________________________\n");
+        printf("Que desea hacer?\n");
+        printf("_________________\n");
+        printf("\n");
+        printf("1-Cargar ficheros.\n");
+        printf("\n");
+        printf("2-Imprimir fichero.\n");
+        printf("\n");
+        printf("3-Mostrar estadísticas.\n");
+        printf("\n");
+        printf("4-Cerrar programa.\n");
+        printf("\n");
+
+        // Le piden al usuario que desea hacer
+        scanf("%d",&option);
+        switch(option){
+            case 1:
+            {
+                // Carga el fichero
+                char nombre_fichero[32];
+                printf("Nombre del fichero a cargar:\n");
+                scanf("%s",nombre_fichero);
+                distrito_cargado = cargar_fichero_nuevo(nombre_fichero);
+                mostrar_menu=1;
+                break;
+            }
+            case 2:
+            {
+                // Imprime la lista de fuentes
+                printf("\n");
+                imprimir_lista(distrito_cargado);
+                printf("\n");
+                mostrar_menu=1;
+                break;
+            }
+            case 3:
+            {
+                // Muestra las estadísticas
+                printf("\n");
+                imprimir_valores_estadisticos(distrito_cargado);
+                printf("\n");
+                mostrar_menu=1;
+                break;
+            }
+            case 4:
+            {
+                //Cierra el programa
+                printf("\n");
+                printf("CERRANDO PROGRAMA\n");
+                printf("\n");
+                mostrar_menu=0;
+                break;
+            }
+            default:
+            {
+                // De no introducir una respuesta correcta, el programa le informa, repitiendo el bucle hasta que la opción introducida sea correcta
+                printf("\n");
+                printf("ERROR, la opción elegida no está disponible, vuleva a introducir una opción valida\n");
+                printf("\n");
+                mostrar_menu=1;
+                break;
+            }
+        }
+    } while(mostrar_menu != 0);
+
+    return 0;
 }
 
-/* Definicion de funciones auxiliares */
+/* Definición de funciones auxiliares */
 
 /*Función para leer el fichero de carga y transformarlo a la estructura para almacenar*/
 struct distrito cargar_fichero_nuevo(char nombre_fichero[32]) {
@@ -114,8 +128,8 @@ struct distrito cargar_fichero_nuevo(char nombre_fichero[32]) {
 
     //abrimos fichero
     fichero_nuevo=fopen(nombre_fichero,"r");
-    if (fichero_nuevo==NULL) //si el fichero que vamos a cargar está vacío nos da mensaje de error
-    {
+    //si el fichero que vamos a cargar está vacío nos da mensaje de error
+    if (fichero_nuevo==NULL) {
         printf("Error al abrir el fichero\n");
         return mi_distrito;
     }
