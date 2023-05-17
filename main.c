@@ -289,3 +289,27 @@ void banner(void)
 {
 
 }
+/*Nuevo*/
+void imprimir_dato(struct distrito mi_distrito, int indice, const char* dato) {
+    if (indice < 0 || indice >= mi_distrito.num_fuentes) {
+        printf("Índice inválido\n");
+        return;
+    }
+
+    printf("%-15s", "Parametros");
+    if (strcmp(dato, "pH") == 0) {
+        printf("%-5s\n", "pH");
+        printf("%-15s %-5.2f\n", mi_distrito.datos_fuente[indice].nom_fuente, mi_distrito.datos_fuente[indice].pH);
+    } else if (strcmp(dato, "Conductividad") == 0) {
+        printf("%-14s\n", "Conductividad");
+        printf("%-15s %-14d\n", mi_distrito.datos_fuente[indice].nom_fuente, mi_distrito.datos_fuente[indice].conductividad);
+    } else if (strcmp(dato, "Turbidez") == 0) {
+        printf("%-9s\n", "Turbidez");
+        printf("%-15s %-9d\n", mi_distrito.datos_fuente[indice].nom_fuente, mi_distrito.datos_fuente[indice].turbidez);
+    } else if (strcmp(dato, "Coliformes") == 0) {
+        printf("%-11s\n", "Coliformes");
+        printf("%-15s %-11d\n", mi_distrito.datos_fuente[indice].nom_fuente, mi_distrito.datos_fuente[indice].coliformes);
+    } else {
+        printf("Dato inválido\n");
+    }
+}
