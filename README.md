@@ -7,7 +7,7 @@ Análisis y gestión de las fuentes de agua metropolitanas de Madrid.
 - Diego Medina Espinosa (Diego105)
 - María Victoria Herranz Chamorro (mvictoria-upm)
 - Pablo Huete Serrano (PabloHuete)
-- Nicolas Delgado García (hfjfbfb)
+- Nicolás Delgado García (hfjfbfb)
 
 ## Objetivos del trabajo
 
