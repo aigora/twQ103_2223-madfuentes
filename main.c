@@ -122,8 +122,8 @@ struct distrito cargar_fichero_nuevo(char nombre_fichero[32]) {
     FILE *fichero_nuevo;
     struct distrito mi_distrito;
     int i=0,j=0;
-    char temp_anio[4];
-    char temp_mes[2];
+    char temp_anio[5];
+    char temp_mes[3];
     char temp_nomdistrito[26];
 
     //abrimos fichero
@@ -138,14 +138,16 @@ struct distrito cargar_fichero_nuevo(char nombre_fichero[32]) {
     for (i=0; i<4; i++) {
         temp_anio[i] = nombre_fichero[i];
     }
+    temp_anio[i+1] = '\0';
 
     //cogemos las dos siguientes para el mes
     for (i=4; i<6; i++) {
         temp_mes[i-4] = nombre_fichero[i];
     }
+    temp_mes[i+1] = '\0';
 
     //saltamos el guion en el siguiente bucle y cogemos el nombre del distrito
-    for (i=7; i<32; i++) {
+    for (i=7; i<31; i++) {
         if (nombre_fichero[i] == '.') {
             temp_nomdistrito[i-7] = '\0';
             break;
@@ -154,9 +156,10 @@ struct distrito cargar_fichero_nuevo(char nombre_fichero[32]) {
             temp_nomdistrito[i-7] = nombre_fichero[i];
         }
     }
+
     strcpy(mi_distrito.nom_distrito,temp_nomdistrito);
-    mi_distrito.anio=atoi(temp_anio); //pasamos a entero
-    mi_distrito.mes=atoi(temp_mes); //pasamos a entero
+    mi_distrito.anio=atoi(temp_anio); //pasamos cadenas de caracteres a entero
+    mi_distrito.mes=atoi(temp_mes); //pasamos cadenas de caracteres a entero
 
     /* Leemos y descartamos linea de cabecera */
     char cabecera[128];
@@ -170,8 +173,11 @@ struct distrito cargar_fichero_nuevo(char nombre_fichero[32]) {
 
     fclose(fichero_nuevo);
 
+    printf("Fichero cargado correctamente\n");
+
     return mi_distrito;
 }
+
 
 struct estadisticas obtener_valores_estadisticos(float datos_estadistica[50], int num_fuentes)
 {
