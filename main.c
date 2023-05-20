@@ -33,6 +33,11 @@ struct estadisticas obtener_valores_estadisticos(float datos_estadistica[50], in
 void imprimir_valores_estadisticos(struct distrito mi_distrito);
 void imprimir_lista(struct distrito mi_distrito);
 void banner(void);
+void menu_principal(void);
+void menu_carga_ficheros(void);
+void menu_visualizacion_datos(void);
+void menu_estadisticas(void);
+
 
 /* Función principal */
 int main()
@@ -45,19 +50,7 @@ int main()
 
     /* Lanzamos menú con opciones */
     do{
-        printf("Bienvenido al menu del programa de registro de fuentes MADFUENTES.\n");
-        printf("__________________________________________________________________\n");
-        printf("Que desea hacer?\n");
-        printf("_________________\n");
-        printf("\n");
-        printf("1-Cargar ficheros.\n");
-        printf("\n");
-        printf("2-Imprimir fichero.\n");
-        printf("\n");
-        printf("3-Mostrar estadísticas.\n");
-        printf("\n");
-        printf("4-Cerrar programa.\n");
-        printf("\n");
+        menu_principal();
 
         // Le piden al usuario que desea hacer
         scanf("%d",&option);
@@ -295,6 +288,78 @@ void banner(void)
 {
 
 }
+/* Menú principal */
+void menu_principal(void)
+{
+    	system("cls"); //limpiamos la consola
+    	printf("Bienvenido al men%c del programa de registro de fuentes MADFUENTES.\n", 163);
+    	printf("------------------------------------------------------------------\n\n");
+    	printf("Qu%c desea hacer?\n", 130);
+    	printf("----------------\n");
+    	printf("\n");
+    	printf("1 - Carga de ficheros.\n");
+    	printf("\n");
+    	printf("2 - Visualizaci%cn de datos.\n", 162);
+    	printf("\n");
+    	printf("3 - Mostrar estad%csticas.\n", 161);
+    	printf("\n");
+    	printf("4 - Cerrar el programa.\n");
+    	printf("\n");
+}
+
+/* Menú carga de ficheros */
+void menu_carga_ficheros(void)
+{
+    	system("cls"); //limpiamos la consola
+    	printf("Submen%c de carga de ficheros.\n", 163);
+    	printf("------------------------------\n\n");
+    	printf("Qu%c desea hacer?\n", 130);
+    	printf("----------------\n");
+    	printf("\n");
+    	printf("1 - Carga simple mensual de un fichero.\n");
+    	printf("\n");
+    	printf("2 - Carga anual de ficheros de un distrito.\n");
+    	printf("\n");
+    	printf("3 - Lista de ficheros cargados.\n");
+    	printf("\n");
+    	printf("4 - Volver al men%c principal.\n", 163);
+    	printf("\n");
+}
+
+/* Menú visualización de datos */
+void menu_visualizacion_datos(void)
+{
+    	system("cls"); //limpiamos la consola
+    	printf("Submen%c de visualizaci%cn de datos.\n", 163, 162);
+    	printf("----------------------------------\n\n");
+    	printf("Qu%c desea hacer?\n", 130);
+    	printf("----------------\n");
+    	printf("\n");
+    	printf("1 - Visualizaci%cn de fichero mensual.\n", 162);
+    	printf("\n");
+    	printf("2 - Visualizaci%cn de dato espec%cfico.\n", 162, 161);
+    	printf("\n");
+    	printf("3 - Volver al men%c principal.\n", 163);
+    	printf("\n");
+}
+
+/* Menú cálculo estadísticas */
+void menu_estadisticas(void)
+{
+    	system("cls"); //limpiamos la consola
+    	printf("Submen%c de an%clisis estad%cstico.\n", 163, 160, 161);
+    	printf("--------------------------------\n\n");
+    	printf("Qu%c desea hacer?\n", 130);
+    	printf("----------------\n");
+    	printf("\n");
+    	printf("1 - Estad%csticas b%csicas de fichero mensual.\n", 161, 160);
+    	printf("\n");
+    	printf("2 - Tendencia anual de un distrito.\n");
+    	printf("\n");
+    	printf("3 - Volver al men%c principal.\n", 163);
+    	printf("\n");
+}
+
 /*Nuevo*/
 void imprimir_dato(struct distrito mi_distrito, int indice, const char* dato) {
     if (indice < 0 || indice >= mi_distrito.num_fuentes) {
