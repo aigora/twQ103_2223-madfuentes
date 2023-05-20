@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <windows.h>
 
 /* Estructuras */
  typedef struct fuente {
@@ -29,6 +30,7 @@ struct estadisticas {
 
 /* Declaracion de Funciones auxiliares */
 struct distrito cargar_fichero_nuevo(char nombre_fichero[32]);
+void carga_ficheros(struct distrito distrito_cargado[100]);
 struct estadisticas obtener_valores_estadisticos(float datos_estadistica[50], int num_fuentes);
 void imprimir_valores_estadisticos(struct distrito mi_distrito);
 void imprimir_lista(struct distrito mi_distrito);
@@ -43,7 +45,7 @@ void menu_estadisticas(void);
 int main()
 {
     int option, mostrar_menu=1;
-    struct distrito distrito_cargado;
+    struct distrito distrito_cargado[100];
 
     /* Lanzar banner con titulo */
     banner();
@@ -57,11 +59,7 @@ int main()
         switch(option){
             case 1:
             {
-                // Carga el fichero
-                char nombre_fichero[32];
-                printf("Nombre del fichero a cargar:\n");
-                scanf("%s",nombre_fichero);
-                distrito_cargado = cargar_fichero_nuevo(nombre_fichero);
+                carga_ficheros(distrito_cargado);
                 mostrar_menu=1;
                 break;
             }
@@ -171,6 +169,115 @@ struct distrito cargar_fichero_nuevo(char nombre_fichero[32]) {
     return mi_distrito;
 }
 
+void carga_ficheros(struct distrito distrito_cargado[100])
+{
+    // Submenú de carga de ficheros
+    int i, option, ver_menu=0;
+
+    do {
+        menu_carga_ficheros();
+
+        scanf("%d",&option);
+        switch (option) {
+            case 1:
+            {
+                char nombre_fichero[32];
+                int lleno=1;
+
+                system("cls");
+                printf("Nombre del fichero a cargar (Formato: AAAAMM_Distrito.csv):\n");
+                scanf("%s",nombre_fichero);
+                for (i=0; i<100; i++) {
+                    // Comprobamos que la estructura esta vacia y cargamos el fichero
+                    if (strcmp(distrito_cargado[i].nom_distrito, "") == 0) {
+                        distrito_cargado[i] = cargar_fichero_nuevo(nombre_fichero);
+                        lleno=0;
+                        break;
+                    }
+                }
+                if (lleno == 1)
+                    printf("\nBase de datos llena. No se pueden cargar m%cs ficheros\n", 160);
+
+                Sleep(3000); // Esperamos 3 segundos para mostrar si ficheros cargan o no
+
+                ver_menu=1;
+                break;
+            }
+            case 2:
+            {
+                char nombre_distrito[26], distrito_anual[12][37], temp_anyo[5];
+                char temp_mes[12][3] = {"01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"};
+                int i, j, lleno=1;
+
+                system("cls");
+                printf("Nombre del distrito a cargar (Formato: Distrito):\n");
+                scanf("%25s", nombre_distrito);
+                printf("A%co a cargar (Formato: AAAA):\n", 164);
+                scanf("%4s", temp_anyo);
+
+                // Vaciamos el vector de cadenas de caracteres
+                for (i=0; i<12; i++) {
+                    strcpy(distrito_anual[i], "");
+                }
+
+                // Generamos los nombres de los archivos y lo cargamos
+                for (i=0; i<12; i++) {
+                    strcpy(distrito_anual[i],temp_anyo);
+                    strcat(distrito_anual[i],temp_mes[i]);
+                    strcat(distrito_anual[i],"_");
+                    strcat(distrito_anual[i],nombre_distrito);
+                    strcat(distrito_anual[i],".csv");
+
+                    for (j=0; j<100; j++) {
+                    // Comprobamos que la estructura esta vacia y cargamos el fichero
+                        if (strcmp(distrito_cargado[j].nom_distrito, "") == 0) {
+                            distrito_cargado[j] = cargar_fichero_nuevo(distrito_anual[i]);
+                            lleno=0;
+                            break;
+                        }
+                    }
+                }
+                if (lleno == 1)
+                    printf("\nBase de datos llena. No se pueden cargar m%cs ficheros\n", 160);
+
+                Sleep(2000); // Esperamos 2 segundos para mostrar si ficheros cargan o no
+
+                ver_menu=1;
+                break;
+            }
+            case 3:
+            {
+                system("cls");
+                printf("Lista de ficheros cargados:\n\n");
+                for (i=0; i<100; i++) {
+                    // Comprobamos que la estructura esta vacia y cargamos el fichero
+                    if (strcmp(distrito_cargado[i].nom_distrito, "") == 0) {
+                        break;
+                    }
+                    else {
+                        printf("Fichero %03d: %d%02d_%s.csv\n", i+1, distrito_cargado[i].anio, distrito_cargado[i].mes, distrito_cargado[i].nom_distrito);
+                    }
+                }
+                Sleep(4000);
+                ver_menu=1;
+                break;
+            }
+            case 4:
+            {
+                ver_menu=0;
+                break;
+            }
+            default:
+            {
+                printf("\n");
+                printf("ERROR, la opci%cn elegida no est%c disponible, vuelva a introducir una opci%cn v%clida\n", 162, 161, 162, 161);
+                printf("\n");
+            }
+        }
+    } while(ver_menu!=0);
+
+    return;
+}
 
 struct estadisticas obtener_valores_estadisticos(float datos_estadistica[50], int num_fuentes)
 {
