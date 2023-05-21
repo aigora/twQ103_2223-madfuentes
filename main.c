@@ -387,134 +387,135 @@ void imprimir_fichero_mensual(struct distrito mi_distrito) {
         printf("%-15s %-5.2f %-14d %-9d %-11d\n", mi_distrito.datos_fuente[i].nom_fuente, mi_distrito.datos_fuente[i].pH, mi_distrito.datos_fuente[i].conductividad, mi_distrito.datos_fuente[i].turbidez, mi_distrito.datos_fuente[i].coliformes);
     }
 }
+
 /*Función para visualizar un dato específico*/
 void imprimir_dato(struct distrito mi_distrito, int indice, char* dato) {
-	if (indice < 0 || indice >= mi_distrito.num_fuentes) {
-    	printf("Índice inválido\n");
-    	return;
-	}
+    if (indice < 0 || indice >= mi_distrito.num_fuentes) {
+        printf("Índice inválido\n");
+        return;
+    }
 
-	printf("%-15s", "Parametros");
-	if (strcmp(dato, "pH") == 0) {
-    	printf("%-5s\n", "pH");
-    	printf("%-15s %-5.2f\n", mi_distrito.datos_fuente[indice].nom_fuente, mi_distrito.datos_fuente[indice].pH);
-	} else if (strcmp(dato, "Conductividad") == 0) {
-    	printf("%-14s\n", "Conductividad");
-    	printf("%-15s %-14d\n", mi_distrito.datos_fuente[indice].nom_fuente, mi_distrito.datos_fuente[indice].conductividad);
-	} else if (strcmp(dato, "Turbidez") == 0) {
-    	printf("%-9s\n", "Turbidez");
-    	printf("%-15s %-9d\n", mi_distrito.datos_fuente[indice].nom_fuente, mi_distrito.datos_fuente[indice].turbidez);
-	} else if (strcmp(dato, "Coliformes") == 0) {
-    	printf("%-11s\n", "Coliformes");
-    	printf("%-15s %-11d\n", mi_distrito.datos_fuente[indice].nom_fuente, mi_distrito.datos_fuente[indice].coliformes);
-	} else {
-    	printf("Dato inv%clido\n", 160);
-	}
+    printf("%-15s", "Parametros");
+    if (strcmp(dato, "pH") == 0) {
+        printf("%-5s\n", "pH");
+        printf("%-15s %-5.2f\n", mi_distrito.datos_fuente[indice].nom_fuente, mi_distrito.datos_fuente[indice].pH);
+    } else if (strcmp(dato, "Conductividad") == 0) {
+        printf("%-14s\n", "Conductividad");
+        printf("%-15s %-14d\n", mi_distrito.datos_fuente[indice].nom_fuente, mi_distrito.datos_fuente[indice].conductividad);
+    } else if (strcmp(dato, "Turbidez") == 0) {
+        printf("%-9s\n", "Turbidez");
+        printf("%-15s %-9d\n", mi_distrito.datos_fuente[indice].nom_fuente, mi_distrito.datos_fuente[indice].turbidez);
+    } else if (strcmp(dato, "Coliformes") == 0) {
+        printf("%-11s\n", "Coliformes");
+        printf("%-15s %-11d\n", mi_distrito.datos_fuente[indice].nom_fuente, mi_distrito.datos_fuente[indice].coliformes);
+    } else {
+        printf("Dato inv%clido\n", 160);
+    }
 }
 
 void visualizacion_ficheros(struct distrito distrito_cargado[100])
 {
-	// Submenú de visualización de ficheros y busqueda de datos
-	int i, j, k, l, option, ver_menu=0;
-	char tecla_exit[26];
+    // Submenú de visualización de ficheros y busqueda de datos
+    int i, j, k, l, option, ver_menu=0;
+    char tecla_exit[26];
 
-	do {
-    	menu_visualizacion_datos();
+    do {
+        menu_visualizacion_datos();
 
-    	scanf("%d",&option);
-    	switch (option) {
-        	case 1:
-        	{
-            	system("cls");
-            	printf("Ficheros cargados disponibles para visualizar:\n");
-            	for (i=0; i<100; i++) {
-                	// Cuando la estructura esté vacia salimos del bucle. Ya no hay nada más que imprimir
-                	if (strcmp(distrito_cargado[i].nom_distrito, "") == 0) {
-                    	break;
-                	}
-                	else {
-                    	printf("Fichero %d: %d%02d_%s.csv\n", i+1, distrito_cargado[i].anio, distrito_cargado[i].mes, distrito_cargado[i].nom_distrito);
-                	}
-            	}
+        scanf("%d",&option);
+        switch (option) {
+            case 1:
+            {
+                system("cls");
+                printf("Ficheros cargados disponibles para visualizar:\n");
+                for (i=0; i<100; i++) {
+                    // Cuando la estructura esté vacia salimos del bucle. Ya no hay nada más que imprimir
+                    if (strcmp(distrito_cargado[i].nom_distrito, "") == 0) {
+                        break;
+                    }
+                    else {
+                        printf("Fichero %d: %d%02d_%s.csv\n", i+1, distrito_cargado[i].anio, distrito_cargado[i].mes, distrito_cargado[i].nom_distrito);
+                    }
+                }
 
-            	printf("\nIntroduzca por teclado el n%cmero del fichero que quiere visualizar:\n", 163);
+                printf("\nIntroduzca por teclado el n%cmero del fichero que quiere visualizar:\n", 163);
 
-            	// Obtenemos por teclado el distrito a visualizar
-            	scanf("%2d", &j);
+                // Obtenemos por teclado el distrito a visualizar
+                scanf("%2d", &j);
 
-            	system("cls");
-            	printf("Distrito: %s, Mes: %d, A%co: %d\n\n", distrito_cargado[j-1].nom_distrito, distrito_cargado[j-1].mes, 164, distrito_cargado[j-1].anio);
+                system("cls");
+                printf("Distrito: %s, Mes: %d, A%co: %d\n\n", distrito_cargado[j-1].nom_distrito, distrito_cargado[j-1].mes, 164, distrito_cargado[j-1].anio);
 
-            	// Imprimimos el distrito a visualizar
-            	imprimir_fichero_mensual(distrito_cargado[j-1]);
+                // Imprimimos el distrito a visualizar
+                imprimir_fichero_mensual(distrito_cargado[j-1]);
 
-            	printf("\nPulsa cualquier tecla para volver al submen%c anterior\n", 163);
-            	scanf("%25s", tecla_exit);
+                printf("\nPulsa cualquier tecla para volver al submen%c anterior\n", 163);
+                scanf("%25s", tecla_exit);
 
-            	ver_menu=1;
-            	break;
-        	}
-        	case 2:
-        	{
-            	char nombre_distrito[26];
-            	char parametro[26], tecla_exit[26];
-            	int temp_mes, temp_anio, temp_fuente, bandera=0;
+                ver_menu=1;
+                break;
+            }
+            case 2:
+            {
+                char nombre_distrito[26];
+                char parametro[26], tecla_exit[26];
+                int temp_mes, temp_anio, temp_fuente, bandera=0;
 
-            	system("cls");
-            	printf("Introduce el par%cmetro a visualizar (Formato: pH, Conductividad, Turbidez o Coliformes):\n", 160);
-            	scanf("%25s", parametro);
-            	printf("Introduce el nombre del distrito (Formato: Distrito):\n");
-            	scanf("%25s", nombre_distrito);
-            	printf("Introduce el a%co a cargar (Formato: AAAA):\n", 164);
-            	scanf("%d", &temp_anio);
-            	printf("Introduce el mes (Formato: Mes en n%cmero):\n", 163);
-            	scanf("%d", &temp_mes);
-            	printf("Introduce el n%cmero de fuente:", 163);
-            	scanf("%d", &temp_fuente);
+                system("cls");
+                printf("Introduce el par%cmetro a visualizar (Formato: pH, Conductividad, Turbidez o Coliformes):\n", 160);
+                scanf("%25s", parametro);
+                printf("Introduce el nombre del distrito (Formato: Distrito):\n");
+                scanf("%25s", nombre_distrito);
+                printf("Introduce el a%co a cargar (Formato: AAAA):\n", 164);
+                scanf("%d", &temp_anio);
+                printf("Introduce el mes (Formato: Mes en n%cmero):\n", 163);
+                scanf("%d", &temp_mes);
+                printf("Introduce el n%cmero de fuente:", 163);
+                scanf("%d", &temp_fuente);
 
-            	// Buscamos el distrito, año y mes exactos
-            	for (k=0; k<100; k++) {
-                	if (strcmp(distrito_cargado[k].nom_distrito, nombre_distrito) == 0) {
-                    	if (distrito_cargado[k].anio == temp_anio) {
-                        	if (distrito_cargado[k].mes == temp_mes) {
-                            	l = k;
-                            	bandera=1;
-                            	break;
-                        	}
-                    	}
-                	}
-            	}
+                // Buscamos el distrito, año y mes exactos
+                for (k=0; k<100; k++) {
+                    if (strcmp(distrito_cargado[k].nom_distrito, nombre_distrito) == 0) {
+                        if (distrito_cargado[k].anio == temp_anio) {
+                            if (distrito_cargado[k].mes == temp_mes) {
+                                l = k;
+                                bandera=1;
+                                break;
+                            }
+                        }
+                    }
+                }
 
-            	if (bandera == 1) {
-                	// Imprimos el dato solicitado
-                	system("cls");
-                	imprimir_dato(distrito_cargado[l], temp_fuente-1, parametro);
-            	}
-            	else {
-                	printf("Par%cmetro no localizado\n", 160);
-            	}
+                if (bandera == 1) {
+                    // Imprimos el dato solicitado
+                    system("cls");
+                    imprimir_dato(distrito_cargado[l], temp_fuente-1, parametro);
+                }
+                else {
+                    printf("Par%cmetro no localizado\n", 160);
+                }
 
-            	printf("\nPulsa cualquier tecla para volver al submen%c anterior\n", 163);
-            	scanf("%25s", tecla_exit);
+                printf("\nPulsa cualquier tecla para volver al submen%c anterior\n", 163);
+                scanf("%25s", tecla_exit);
 
-            	ver_menu=1;
-            	break;
-        	}
-        	case 3:
-        	{
-            	ver_menu=0;
-            	break;
-        	}
-        	default:
-        	{
-            	printf("\n");
-            	printf("ERROR, la opci%cn elegida no est%c disponible, vuelva a introducir una opci%cn v%clida\n", 162, 161, 162, 161);
-            	printf("\n");
-        	}
-    	}
-	} while(ver_menu!=0);
+                ver_menu=1;
+                break;
+            }
+            case 3:
+            {
+                ver_menu=0;
+                break;
+            }
+            default:
+            {
+                printf("\n");
+                printf("ERROR, la opci%cn elegida no est%c disponible, vuelva a introducir una opci%cn v%clida\n", 162, 161, 162, 161);
+                printf("\n");
+            }
+        }
+    } while(ver_menu!=0);
 
-	return;
+    return;
 }
 
 
