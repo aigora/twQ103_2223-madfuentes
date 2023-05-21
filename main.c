@@ -77,6 +77,7 @@ int main()
             case 3:
             {
                 // Muestra las estadísticas
+		    estadisticas_ficheros(distrito_cargado);
 
                 mostrar_menu=1;
                 break;
