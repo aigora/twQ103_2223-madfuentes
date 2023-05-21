@@ -536,16 +536,39 @@ void estadisticas_ficheros(struct distrito distrito_cargado[100])
 }
 
 
-/*Función para imprimir por consola el fichero mensual*/
+/*Función para visualizar un fichero mensual*/
 void imprimir_fichero_mensual(struct distrito mi_distrito) {
     int i;
 
     printf("%-15s %-5s %-14s %-9s %-11s\n", "Parametros", "pH", "Conductividad", "Turbidez", "Coliformes");
     for (i=0; i<mi_distrito.num_fuentes; i++) {
-        printf("%-15s %-5.2f %-14d %-9d %-11d\n", mi_distrito.datos_fuente[i].nom_fuente, mi_distrito.datos_fuente[i].pH, mi_distrito.datos_fuente[i].conductividad, mi_distrito.datos_fuente[i].turbidez, mi_distrito.datos_fuente[i].coliformes);
+        printf("%-15s ", mi_distrito.datos_fuente[i].nom_fuente);
+        if ((mi_distrito.datos_fuente[i].pH>ALERTA_SUP_PH) || (mi_distrito.datos_fuente[i].pH<ALERTA_INF_PH)){
+            printf("\x1b[41m\x1b[33m%-5.2f\x1b[0m ", mi_distrito.datos_fuente[i].pH);
+        }
+        else {
+            printf("%-5.2f ", mi_distrito.datos_fuente[i].pH);
+        }
+        if ((mi_distrito.datos_fuente[i].conductividad>ALERTA_SUP_COND) || (mi_distrito.datos_fuente[i].conductividad<ALERTA_INF_COND)) {
+            printf("\x1b[41m\x1b[33m%-14d\x1b[0m ", mi_distrito.datos_fuente[i].conductividad);
+        }
+        else {
+            printf("%-14d ", mi_distrito.datos_fuente[i].conductividad);
+        }
+        if (mi_distrito.datos_fuente[i].turbidez>ALERTA_SUP_TURB) {
+            printf("\x1b[41m\x1b[33m%-9d\x1b[0m ", mi_distrito.datos_fuente[i].turbidez);
+        }
+        else {
+            printf("%-9d ", mi_distrito.datos_fuente[i].turbidez);
+        }
+        if (mi_distrito.datos_fuente[i].coliformes>ALERTA_SUP_COLI) {
+            printf("\x1b[41m\x1b[33m%-11d\x1b[0m\n", mi_distrito.datos_fuente[i].coliformes);
+        }
+        else {
+            printf("%-11d\n", mi_distrito.datos_fuente[i].coliformes);
+        }
     }
 }
-
 /*Función para visualizar un dato específico*/
 void imprimir_dato(struct distrito mi_distrito, int indice, char* dato) {
     if (indice < 0 || indice >= mi_distrito.num_fuentes) {
