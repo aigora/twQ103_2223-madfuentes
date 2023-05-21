@@ -3,6 +3,14 @@
 #include <string.h>
 #include <windows.h>
 
+/* Definición de alertas para visualización de datos */
+#define ALERTA_SUP_PH 9.5
+#define ALERTA_INF_PH 6.5
+#define ALERTA_SUP_COND 500
+#define ALERTA_INF_COND 50
+#define ALERTA_SUP_TURB 2
+#define ALERTA_SUP_COLI 0
+
 /* Estructuras */
  typedef struct fuente {
     char nom_fuente[32];
@@ -58,7 +66,7 @@ int main()
     do{
         menu_principal();
 
-        // Le piden al usuario que desea hacer
+        // Le pide al usuario que desea hacer
         scanf("%d",&option);
         switch(option) {
             case 1:
@@ -69,16 +77,13 @@ int main()
             }
             case 2:
             {
-                // Imprime la lista de fuentes
                 visualizacion_ficheros(distrito_cargado);
                 mostrar_menu=1;
                 break;
             }
             case 3:
             {
-                // Muestra las estadísticas
-		    estadisticas_ficheros(distrito_cargado);
-
+		estadisticas_ficheros(distrito_cargado);
                 mostrar_menu=1;
                 break;
             }
@@ -170,6 +175,7 @@ struct distrito cargar_fichero_nuevo(char nombre_fichero[32]) {
     return mi_distrito;
 }
 
+/*Función de carga de ficheros*/
 void carga_ficheros(struct distrito distrito_cargado[100])
 {
     // Submenú de carga de ficheros
@@ -185,7 +191,7 @@ void carga_ficheros(struct distrito distrito_cargado[100])
                 char nombre_fichero[32];
                 int lleno=1;
 
-                system("cls");
+                system("cls"); //borramos la consola
                 printf("Nombre del fichero a cargar (Formato: AAAAMM_Distrito.csv):\n");
                 scanf("%s",nombre_fichero);
                 for (i=0; i<100; i++) {
@@ -199,7 +205,7 @@ void carga_ficheros(struct distrito distrito_cargado[100])
                 if (lleno == 1)
                     printf("\nBase de datos llena. No se pueden cargar m%cs ficheros\n", 160);
 
-                Sleep(3000); // Esperamos 3 segundos para mostrar si ficheros cargan o no
+                Sleep(3000); // Esperamos 3 segundos para mostrar si los ficheros cargan o no
 
                 ver_menu=1;
                 break;
@@ -210,7 +216,7 @@ void carga_ficheros(struct distrito distrito_cargado[100])
                 char temp_mes[12][3] = {"01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"};
                 int i, j, lleno=1;
 
-                system("cls");
+                system("cls"); //borramos la consola
                 printf("Nombre del distrito a cargar (Formato: Distrito):\n");
                 scanf("%25s", nombre_distrito);
                 printf("A%co a cargar (Formato: AAAA):\n", 164);
@@ -241,14 +247,14 @@ void carga_ficheros(struct distrito distrito_cargado[100])
                 if (lleno == 1)
                     printf("\nBase de datos llena. No se pueden cargar m%cs ficheros\n", 160);
 
-                Sleep(2000); // Esperamos 2 segundos para mostrar si ficheros cargan o no
+                Sleep(2000); // Esperamos 2 segundos para mostrar si los ficheros cargan o no
 
                 ver_menu=1;
                 break;
             }
             case 3:
             {
-                system("cls");
+                system("cls"); //borramos la consola
                 printf("Lista de ficheros cargados:\n\n");
                 for (i=0; i<100; i++) {
                     // Comprobamos que la estructura esta vacia y cargamos el fichero
@@ -259,7 +265,7 @@ void carga_ficheros(struct distrito distrito_cargado[100])
                         printf("Fichero %03d: %d%02d_%s.csv\n", i+1, distrito_cargado[i].anio, distrito_cargado[i].mes, distrito_cargado[i].nom_distrito);
                     }
                 }
-                Sleep(4000);
+                Sleep(4000); //espera de segundos 
                 ver_menu=1;
                 break;
             }
@@ -280,6 +286,7 @@ void carga_ficheros(struct distrito distrito_cargado[100])
     return;
 }
 
+/*Función para obtener valores estadísticos*/
 struct estadisticas obtener_valores_estadisticos(float datos_estadistica[50], int num_fuentes)
 {
     struct estadisticas mi_estadistica;
@@ -341,6 +348,7 @@ struct estadisticas obtener_valores_estadisticos(float datos_estadistica[50], in
     return mi_estadistica;
 }
 
+/*Función para imprimir por pantalla los valores estadísticos calculados en la función anterior*/
 void imprimir_valores_estadisticos(struct distrito mi_distrito)
 {
     struct estadisticas mi_pH, mi_conductividad, mi_turbidez, mi_coliformes;
@@ -381,32 +389,19 @@ void imprimir_valores_estadisticos(struct distrito mi_distrito)
     return;
 }
 
-/*
-La pendiente (m) en el cálculo de la tendencia anual mediante regresión lineal se calcula de la siguiente manera:
-
-m = (n * Σ(xy) - Σx * Σy) / (n * Σ(x^2) - (Σx)^2)
-
-Donde:
-
-	n es el número de datos en la serie.
-	Σxy es la suma de los productos de los valores de los índices (x) y los valores de la serie (y).
-	Σx es la suma de los valores de los índices (x).
-	Σy es la suma de los valores de la serie (y).
-	Σ(x^2) es la suma de los cuadrados de los valores de los índices (x).
-	(Σx)^2 es el cuadrado de la suma de los valores de los índices (x).
-*/
+/* Función para calcular la tendencia, se busca la recta de ajuste por el método de mínimmos cuadrados */
 
 void regresion_lineal(struct distrito distrito_cargado[12]) {
-	float suma_x = 0.0f, suma_x2 = 0.0f;
-	float suma_y_pH=0.0f, suma_y_cond=0.0f, suma_y_turb=0.0f, suma_y_coli=0.0f;
-	float suma_xy_pH=0.0f, suma_xy_cond=0.0f, suma_xy_turb=0.0f, suma_xy_coli=0.0f;
-	float pH, conductividad, turbidez, coliformes;
-	int i, j;
+    float suma_x = 0.0f, suma_x2 = 0.0f;
+    float suma_y_pH=0.0f, suma_y_cond=0.0f, suma_y_turb=0.0f, suma_y_coli=0.0f;
+    float suma_xy_pH=0.0f, suma_xy_cond=0.0f, suma_xy_turb=0.0f, suma_xy_coli=0.0f;
+    float pH, conductividad, turbidez, coliformes;
+    int i, j;
 
-	printf("Tendencias de incrementos mensuales en %s, a partir de los datos del a%co %d\n\n", distrito_cargado[0].nom_distrito, 164, distrito_cargado[0].anio);
-	printf("%-15s %-15s %-15s %-15s %-15s\n", "Parametros", "pH", "Conductividad", "Turbidez", "Coliformes");
+    printf("Tendencias de incrementos mensuales en %s, a partir de los datos del a%co %d\n\n", distrito_cargado[0].nom_distrito, 164, distrito_cargado[0].anio);
+    printf("%-15s %-15s %-15s %-15s %-15s\n", "Parametros", "pH", "Conductividad", "Turbidez", "Coliformes");
 
-	for (i=0; i<distrito_cargado[0].num_fuentes; i++) {
+    for (i=0; i<distrito_cargado[0].num_fuentes; i++) {
     	for (j=0; j<12; j++) {
         	suma_x += j+1;
         	suma_y_pH += distrito_cargado[j].datos_fuente[i].pH;
@@ -431,33 +426,34 @@ void regresion_lineal(struct distrito distrito_cargado[12]) {
     	// reseteamos los valores de las sumas para la siguiente fuente
     	suma_y_pH=suma_y_cond=suma_y_turb=suma_y_coli=0.0f;
     	suma_xy_pH=suma_xy_cond=suma_xy_turb=suma_xy_coli=0.0f;
-	}
+    }
 
 	return;
 }
 
+/*Función para el análisis de estadísticas */
 void estadisticas_ficheros(struct distrito distrito_cargado[100])
 {
-	// Submenú de estadisticas
-	int i, j, k, l, option, ver_menu=0;
-	char tecla_exit[26];
+    // Submenú de estadisticas
+    int i, j, k, l, option, ver_menu=0;
+    char tecla_exit[26];
 
-	do {
+    do {
     	menu_estadisticas();
 
     	scanf("%d",&option);
     	switch (option) {
-        	case 1:
-        	{
+            case 1:
+            {
             	system("cls");
             	printf("Ficheros cargados disponibles para obtener estad%csticas b%csicas:\n", 161, 160);
             	for (i=0; i<100; i++) {
                 	// Cuando la estructura esté vacia salimos del bucle. Ya no hay nada más que imprimir
                 	if (strcmp(distrito_cargado[i].nom_distrito, "") == 0) {
-                    	break;
+                    	    break;
                 	}
                 	else {
-                    	printf("Fichero %d: %d%02d_%s.csv\n", i+1, distrito_cargado[i].anio, distrito_cargado[i].mes, distrito_cargado[i].nom_distrito);
+                    	    printf("Fichero %d: %d%02d_%s.csv\n", i+1, distrito_cargado[i].anio, distrito_cargado[i].mes, distrito_cargado[i].nom_distrito);
                 	}
             	}
 
@@ -477,9 +473,9 @@ void estadisticas_ficheros(struct distrito distrito_cargado[100])
 
             	ver_menu=1;
             	break;
-        	}
-        	case 2:
-        	{
+            }
+            case 2:
+            {
             	char nombre_distrito[26];
             	char tecla_exit[26];
             	int temp_anio, bandera=0;
@@ -493,24 +489,24 @@ void estadisticas_ficheros(struct distrito distrito_cargado[100])
 
             	// Obtenemos los datos anuales de todo el distrito
             	for (k=1; k<13; k++) {
-                	for (l=0; l<100; l++) {
+                    for (l=0; l<100; l++) {
                     	if (strcmp(distrito_cargado[l].nom_distrito, nombre_distrito) == 0) {
-                        	if (distrito_cargado[l].anio == temp_anio) {
+                            if (distrito_cargado[l].anio == temp_anio) {
                             	if (distrito_cargado[l].mes == k) {
-                                	distrito_tendencias[k-1] = distrito_cargado[l];
-                                	bandera++;
-                                	break;
+                                    distrito_tendencias[k-1] = distrito_cargado[l];
+                                    bandera++;
+                                    break;
                             	}
-                        	}
+                            }
                     	}
-                	}
+                    }
             	}
 
             	// Si ha encontrado los 12 meses calculamos tendencias
             	if (bandera == 12) {
-                	// Imprimos las tendencias
-                	system("cls");
-                	regresion_lineal(distrito_tendencias);
+                    // Imprimos las tendencias
+                    system("cls");
+                    regresion_lineal(distrito_tendencias);
             	}
             	else {
                 	printf("No hemos localizado todos los datos para calcular las tendencias\n");
@@ -521,26 +517,26 @@ void estadisticas_ficheros(struct distrito distrito_cargado[100])
 
             	ver_menu=1;
             	break;
-        	}
-        	case 3:
-        	{
+            }
+            case 3:
+            {
             	ver_menu=0;
             	break;
-        	}
-        	default:
-        	{
+            }
+            default:
+            {
             	printf("\n");
             	printf("ERROR, la opci%cn elegida no est%c disponible, vuelva a introducir una opci%cn v%clida\n", 162, 161, 162, 161);
             	printf("\n");
-        	}
+            }
     	}
-	} while(ver_menu!=0);
+    } while(ver_menu!=0);
 
-	return;
+    return;
 }
 
 
-/*Función para imprimir el fichero*/
+/*Función para imprimir por consola el fichero mensual*/
 void imprimir_fichero_mensual(struct distrito mi_distrito) {
     int i;
 
