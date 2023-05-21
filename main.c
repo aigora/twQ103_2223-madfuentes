@@ -83,7 +83,7 @@ int main()
             }
             case 3:
             {
-		estadisticas_ficheros(distrito_cargado);
+                estadisticas_ficheros(distrito_cargado);
                 mostrar_menu=1;
                 break;
             }
@@ -94,15 +94,17 @@ int main()
                 printf("CERRANDO PROGRAMA\n");
                 printf("\n");
                 mostrar_menu=0;
+                Sleep(2000);
                 break;
             }
             default:
             {
                 // De no introducir una respuesta correcta, el programa le informa, repitiendo el bucle hasta que la opción introducida sea correcta
                 printf("\n");
-                printf("ERROR, la opción elegida no está disponible, vuleva a introducir una opción valida\n");
+                printf("ERROR, la opci%cn elegida no est%c disponible, vuelva a introducir una opci%cn v%clida\n", 162, 160, 162, 160);
                 printf("\n");
                 mostrar_menu=1;
+                Sleep(2000);
                 break;
             }
         }
@@ -265,7 +267,7 @@ void carga_ficheros(struct distrito distrito_cargado[100])
                         printf("Fichero %03d: %d%02d_%s.csv\n", i+1, distrito_cargado[i].anio, distrito_cargado[i].mes, distrito_cargado[i].nom_distrito);
                     }
                 }
-                Sleep(4000); //espera de segundos 
+                Sleep(4000); //espera de segundos
                 ver_menu=1;
                 break;
             }
@@ -277,8 +279,11 @@ void carga_ficheros(struct distrito distrito_cargado[100])
             default:
             {
                 printf("\n");
-                printf("ERROR, la opci%cn elegida no est%c disponible, vuelva a introducir una opci%cn v%clida\n", 162, 161, 162, 161);
+                printf("ERROR, la opci%cn elegida no est%c disponible, vuelva a introducir una opci%cn v%clida\n", 162, 160, 162, 160);
                 printf("\n");
+                ver_menu=1;
+                Sleep(2000);
+                break;
             }
         }
     } while(ver_menu!=0);
@@ -524,8 +529,11 @@ void estadisticas_ficheros(struct distrito distrito_cargado[100])
             default:
             {
                 printf("\n");
-                printf("ERROR, la opci%cn elegida no est%c disponible, vuelva a introducir una opci%cn v%clida\n", 162, 161, 162, 161);
+                printf("ERROR, la opci%cn elegida no est%c disponible, vuelva a introducir una opci%cn v%clida\n", 162, 160, 162, 160);
                 printf("\n");
+                ver_menu=1;
+                Sleep(2000);
+                break;
             }
         }
     } while(ver_menu!=0);
@@ -689,8 +697,11 @@ void visualizacion_ficheros(struct distrito distrito_cargado[100])
             default:
             {
                 printf("\n");
-                printf("ERROR, la opci%cn elegida no est%c disponible, vuelva a introducir una opci%cn v%clida\n", 162, 161, 162, 161);
+                printf("ERROR, la opci%cn elegida no est%c disponible, vuelva a introducir una opci%cn v%clida\n", 162, 160, 162, 160);
                 printf("\n");
+                ver_menu=1;
+                Sleep(2000);
+                break;
             }
         }
     } while(ver_menu!=0);
@@ -702,11 +713,11 @@ void visualizacion_ficheros(struct distrito distrito_cargado[100])
 /*Banner*/
 void banner(void)
 {
-	
-char caracter;	
+
+char caracter;
 system("mode con cols=95 lines=32");
-printf("\n\n\n");                
-printf("\x1B[34m    _____                        _____                                                       \033[0m \n");                   
+printf("\n\n\n");
+printf("\x1B[34m    _____                        _____                                                       \033[0m \n");
 printf("\x1B[34m ___|    _|__  ____    _____   __|___  |__  __   _  ______  ____   _    __    ______  ______   \033[0m\n");
 printf("\x1B[34m|    \\  /  | ||    \\  |     \\ |   ___|    ||  | | ||   ___||    \\ | | _|  |_ |   ___||   ___|  \033[0m\n");
 printf("\x1B[34m|     \\/   | ||     \\ |      \\|   ___|    ||  |_| ||   ___||     \\| ||_    _||   ___| `-.`-.  \033[0m \n");
