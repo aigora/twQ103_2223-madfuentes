@@ -402,36 +402,35 @@ void regresion_lineal(struct distrito distrito_cargado[12]) {
     printf("%-15s %-15s %-15s %-15s %-15s\n", "Parametros", "pH", "Conductividad", "Turbidez", "Coliformes");
 
     for (i=0; i<distrito_cargado[0].num_fuentes; i++) {
-    	for (j=0; j<12; j++) {
-        	suma_x += j+1;
-        	suma_y_pH += distrito_cargado[j].datos_fuente[i].pH;
-        	suma_xy_pH += (j+1)*distrito_cargado[j].datos_fuente[i].pH;
-        	suma_y_cond += distrito_cargado[j].datos_fuente[i].conductividad;
-        	suma_xy_cond += (j+1)*distrito_cargado[j].datos_fuente[i].conductividad;
-        	suma_y_turb += distrito_cargado[j].datos_fuente[i].turbidez;
-        	suma_xy_turb += (j+1)*distrito_cargado[j].datos_fuente[i].turbidez;
-        	suma_y_coli += distrito_cargado[j].datos_fuente[i].coliformes;
-        	suma_xy_coli += (j+1)*distrito_cargado[j].datos_fuente[i].coliformes;
-        	suma_x2 += (j+1)*(j+1);
-    	}
+        for (j=0; j<12; j++) {
+            suma_x += j+1;
+            suma_y_pH += distrito_cargado[j].datos_fuente[i].pH;
+            suma_xy_pH += (j+1)*distrito_cargado[j].datos_fuente[i].pH;
+            suma_y_cond += distrito_cargado[j].datos_fuente[i].conductividad;
+            suma_xy_cond += (j+1)*distrito_cargado[j].datos_fuente[i].conductividad;
+            suma_y_turb += distrito_cargado[j].datos_fuente[i].turbidez;
+            suma_xy_turb += (j+1)*distrito_cargado[j].datos_fuente[i].turbidez;
+            suma_y_coli += distrito_cargado[j].datos_fuente[i].coliformes;
+            suma_xy_coli += (j+1)*distrito_cargado[j].datos_fuente[i].coliformes;
+            suma_x2 += (j+1)*(j+1);
+        }
 
-    	// Calculamos la tendencia para los 4 parametros
-    	pH = (12*suma_xy_pH - suma_x*suma_y_pH)/(12*suma_x2 - suma_x*suma_x);
-    	conductividad = (12*suma_xy_cond - suma_x*suma_y_cond)/(12*suma_x2 - suma_x*suma_x);
-    	turbidez = (12*suma_xy_turb - suma_x*suma_y_turb)/(12*suma_x2 - suma_x*suma_x);
-    	coliformes = (12*suma_xy_coli - suma_x*suma_y_coli)/(12*suma_x2 - suma_x*suma_x);
+        // Calculamos la tendencia para los 4 parametros
+        pH = (12*suma_xy_pH - suma_x*suma_y_pH)/(12*suma_x2 - suma_x*suma_x);
+        conductividad = (12*suma_xy_cond - suma_x*suma_y_cond)/(12*suma_x2 - suma_x*suma_x);
+        turbidez = (12*suma_xy_turb - suma_x*suma_y_turb)/(12*suma_x2 - suma_x*suma_x);
+        coliformes = (12*suma_xy_coli - suma_x*suma_y_coli)/(12*suma_x2 - suma_x*suma_x);
 
-    	printf("%-15s %-15.2f %-15.2f %-15.2f %-15.2f\n", distrito_cargado[0].datos_fuente[i].nom_fuente, pH, conductividad, turbidez, coliformes);
+        printf("%-15s %-15.2f %-15.2f %-15.2f %-15.2f\n", distrito_cargado[0].datos_fuente[i].nom_fuente, pH, conductividad, turbidez, coliformes);
 
-    	// reseteamos los valores de las sumas para la siguiente fuente
-    	suma_y_pH=suma_y_cond=suma_y_turb=suma_y_coli=0.0f;
-    	suma_xy_pH=suma_xy_cond=suma_xy_turb=suma_xy_coli=0.0f;
+        // reseteamos los valores de las sumas para la siguiente fuente
+        suma_y_pH=suma_y_cond=suma_y_turb=suma_y_coli=0.0f;
+        suma_xy_pH=suma_xy_cond=suma_xy_turb=suma_xy_coli=0.0f;
     }
 
-	return;
+    return;
 }
 
-/*Función para el análisis de estadísticas */
 void estadisticas_ficheros(struct distrito distrito_cargado[100])
 {
     // Submenú de estadisticas
@@ -439,97 +438,97 @@ void estadisticas_ficheros(struct distrito distrito_cargado[100])
     char tecla_exit[26];
 
     do {
-    	menu_estadisticas();
+        menu_estadisticas();
 
-    	scanf("%d",&option);
-    	switch (option) {
+        scanf("%d",&option);
+        switch (option) {
             case 1:
             {
-            	system("cls");
-            	printf("Ficheros cargados disponibles para obtener estad%csticas b%csicas:\n", 161, 160);
-            	for (i=0; i<100; i++) {
-                	// Cuando la estructura esté vacia salimos del bucle. Ya no hay nada más que imprimir
-                	if (strcmp(distrito_cargado[i].nom_distrito, "") == 0) {
-                    	    break;
-                	}
-                	else {
-                    	    printf("Fichero %d: %d%02d_%s.csv\n", i+1, distrito_cargado[i].anio, distrito_cargado[i].mes, distrito_cargado[i].nom_distrito);
-                	}
-            	}
+                system("cls");
+                printf("Ficheros cargados disponibles para obtener estad%csticas b%csicas:\n", 161, 160);
+                for (i=0; i<100; i++) {
+                    // Cuando la estructura esté vacia salimos del bucle. Ya no hay nada más que imprimir
+                    if (strcmp(distrito_cargado[i].nom_distrito, "") == 0) {
+                        break;
+                    }
+                    else {
+                        printf("Fichero %d: %d%02d_%s.csv\n", i+1, distrito_cargado[i].anio, distrito_cargado[i].mes, distrito_cargado[i].nom_distrito);
+                    }
+                }
 
-            	printf("\nIntroduzca por teclado el n%cmero del fichero sobre el que obtener las estad%csticas:\n", 163, 161);
+                printf("\nIntroduzca por teclado el n%cmero del fichero sobre el que obtener las estad%csticas:\n", 163, 161);
 
-            	// Obtenemos por teclado el distrito a visualizar
-            	scanf("%2d", &j);
+                // Obtenemos por teclado el distrito a visualizar
+                scanf("%2d", &j);
 
-            	system("cls");
-            	printf("Distrito: %s, Mes: %d, A%co: %d\n\n", distrito_cargado[j-1].nom_distrito, distrito_cargado[j-1].mes, 164, distrito_cargado[j-1].anio);
+                system("cls");
+                printf("Distrito: %s, Mes: %d, A%co: %d\n\n", distrito_cargado[j-1].nom_distrito, distrito_cargado[j-1].mes, 164, distrito_cargado[j-1].anio);
 
-            	// Imprimimos el distrito a visualizar
-            	imprimir_valores_estadisticos(distrito_cargado[j-1]);
+                // Imprimimos el distrito a visualizar
+                imprimir_valores_estadisticos(distrito_cargado[j-1]);
 
-            	printf("\nPulsa cualquier tecla para volver al submen%c anterior\n", 163);
-            	scanf("%25s", tecla_exit);
+                printf("\nPulsa cualquier tecla para volver al submen%c anterior\n", 163);
+                scanf("%25s", tecla_exit);
 
-            	ver_menu=1;
-            	break;
+                ver_menu=1;
+                break;
             }
             case 2:
             {
-            	char nombre_distrito[26];
-            	char tecla_exit[26];
-            	int temp_anio, bandera=0;
-            	struct distrito distrito_tendencias[12];
+                char nombre_distrito[26];
+                char tecla_exit[26];
+                int temp_anio, bandera=0;
+                struct distrito distrito_tendencias[12];
 
-            	system("cls");
-            	printf("Introduce el nombre del distrito sobre el que analizar las tendencias (Formato: Distrito):\n");
-            	scanf("%25s", nombre_distrito);
-            	printf("Introduce el a%co a cargar (Formato: AAAA):\n", 164);
-            	scanf("%d", &temp_anio);
+                system("cls");
+                printf("Introduce el nombre del distrito sobre el que analizar las tendencias (Formato: Distrito):\n");
+                scanf("%25s", nombre_distrito);
+                printf("Introduce el a%co a cargar (Formato: AAAA):\n", 164);
+                scanf("%d", &temp_anio);
 
-            	// Obtenemos los datos anuales de todo el distrito
-            	for (k=1; k<13; k++) {
+                // Obtenemos los datos anuales de todo el distrito
+                for (k=1; k<13; k++) {
                     for (l=0; l<100; l++) {
-                    	if (strcmp(distrito_cargado[l].nom_distrito, nombre_distrito) == 0) {
+                        if (strcmp(distrito_cargado[l].nom_distrito, nombre_distrito) == 0) {
                             if (distrito_cargado[l].anio == temp_anio) {
-                            	if (distrito_cargado[l].mes == k) {
+                                if (distrito_cargado[l].mes == k) {
                                     distrito_tendencias[k-1] = distrito_cargado[l];
                                     bandera++;
                                     break;
-                            	}
+                                }
                             }
-                    	}
+                        }
                     }
-            	}
+                }
 
-            	// Si ha encontrado los 12 meses calculamos tendencias
-            	if (bandera == 12) {
+                // Si ha encontrado los 12 meses calculamos tendencias
+                if (bandera == 12) {
                     // Imprimos las tendencias
                     system("cls");
                     regresion_lineal(distrito_tendencias);
-            	}
-            	else {
-                	printf("No hemos localizado todos los datos para calcular las tendencias\n");
-            	}
+                }
+                else {
+                    printf("No hemos localizado todos los datos para calcular las tendencias\n");
+                }
 
-            	printf("\nPulsa cualquier tecla para volver al submen%c anterior\n", 163);
-            	scanf("%25s", tecla_exit);
+                printf("\nPulsa cualquier tecla para volver al submen%c anterior\n", 163);
+                scanf("%25s", tecla_exit);
 
-            	ver_menu=1;
-            	break;
+                ver_menu=1;
+                break;
             }
             case 3:
             {
-            	ver_menu=0;
-            	break;
+                ver_menu=0;
+                break;
             }
             default:
             {
-            	printf("\n");
-            	printf("ERROR, la opci%cn elegida no est%c disponible, vuelva a introducir una opci%cn v%clida\n", 162, 161, 162, 161);
-            	printf("\n");
+                printf("\n");
+                printf("ERROR, la opci%cn elegida no est%c disponible, vuelva a introducir una opci%cn v%clida\n", 162, 161, 162, 161);
+                printf("\n");
             }
-    	}
+        }
     } while(ver_menu!=0);
 
     return;
