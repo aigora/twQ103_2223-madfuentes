@@ -58,7 +58,7 @@ int main()
 
         // Le piden al usuario que desea hacer
         scanf("%d",&option);
-        switch(option){
+        switch(option) {
             case 1:
             {
                 carga_ficheros(distrito_cargado);
@@ -68,16 +68,14 @@ int main()
             case 2:
             {
                 // Imprime la lista de fuentes
-                imprimir_lista(distrito_cargado);
+                visualizacion_ficheros(distrito_cargado);
                 mostrar_menu=1;
                 break;
             }
             case 3:
             {
                 // Muestra las estadísticas
-                printf("\n");
-                visualizacion_ficheros(distrito_cargado);
-                printf("\n");
+
                 mostrar_menu=1;
                 break;
             }
