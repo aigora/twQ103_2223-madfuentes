@@ -11,4 +11,6 @@ Análisis y gestión de las fuentes de agua metropolitanas de Madrid.
 
 ## Objetivos del trabajo
 
-[Lista de los objetivos que se persiguen con el trabajo propuesto.]
+- Poder cargar ficheros de datos de análisis de aguas, mensual y anualmente.
+- Visualización de los datos cargados, por mes completo o por dato individual.
+- Obtención de estadísticas de los datos cargados: media, moda, mediana, máximo, mínimo.
