@@ -292,14 +292,14 @@ struct estadisticas obtener_valores_estadisticos(float datos_estadistica[50], in
     mi_estadistica.media=media;
 
     /*Calculamos el maximo*/
-    for (i=1;i<=num_fuentes;i++){
+    for (i=1;i<num_fuentes;i++){
         if (datos_estadistica[i]>maximo)
             maximo=datos_estadistica[i];
     }
     mi_estadistica.maximo=maximo;
 
      /*Calculamos el minimo*/
-    for (i=1;i<=num_fuentes;i++){
+    for (i=1;i<num_fuentes;i++){
         if (datos_estadistica[i]<minimo)
             minimo=datos_estadistica[i];
     }
