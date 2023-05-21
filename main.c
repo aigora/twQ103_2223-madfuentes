@@ -704,6 +704,7 @@ void banner(void)
 {
 	
 char caracter;	
+system("mode con cols=95 lines=32");
 printf("\n\n\n");                
 printf("\x1B[34m    _____                        _____                                                       \033[0m \n");                   
 printf("\x1B[34m ___|    _|__  ____    _____   __|___  |__  __   _  ______  ____   _    __    ______  ______   \033[0m\n");
