@@ -390,7 +390,6 @@ void imprimir_valores_estadisticos(struct distrito mi_distrito)
 }
 
 /* Función para calcular la tendencia, se busca la recta de ajuste por el método de mínimmos cuadrados */
-
 void regresion_lineal(struct distrito distrito_cargado[12]) {
     float suma_x = 0.0f, suma_x2 = 0.0f;
     float suma_y_pH=0.0f, suma_y_cond=0.0f, suma_y_turb=0.0f, suma_y_coli=0.0f;
@@ -568,6 +567,7 @@ void imprimir_fichero_mensual(struct distrito mi_distrito) {
         }
     }
 }
+
 /*Función para visualizar un dato específico*/
 void imprimir_dato(struct distrito mi_distrito, int indice, char* dato) {
     if (indice < 0 || indice >= mi_distrito.num_fuentes) {
@@ -791,29 +791,4 @@ void menu_estadisticas(void)
     	printf("\n");
     	printf("3 - Volver al men%c principal.\n", 163);
     	printf("\n");
-}
-
-/*Nuevo*/
-void imprimir_dato(struct distrito mi_distrito, int indice, const char* dato) {
-    if (indice < 0 || indice >= mi_distrito.num_fuentes) {
-        printf("Índice inválido\n");
-        return;
-    }
-
-    printf("%-15s", "Parametros");
-    if (strcmp(dato, "pH") == 0) {
-        printf("%-5s\n", "pH");
-        printf("%-15s %-5.2f\n", mi_distrito.datos_fuente[indice].nom_fuente, mi_distrito.datos_fuente[indice].pH);
-    } else if (strcmp(dato, "Conductividad") == 0) {
-        printf("%-14s\n", "Conductividad");
-        printf("%-15s %-14d\n", mi_distrito.datos_fuente[indice].nom_fuente, mi_distrito.datos_fuente[indice].conductividad);
-    } else if (strcmp(dato, "Turbidez") == 0) {
-        printf("%-9s\n", "Turbidez");
-        printf("%-15s %-9d\n", mi_distrito.datos_fuente[indice].nom_fuente, mi_distrito.datos_fuente[indice].turbidez);
-    } else if (strcmp(dato, "Coliformes") == 0) {
-        printf("%-11s\n", "Coliformes");
-        printf("%-15s %-11d\n", mi_distrito.datos_fuente[indice].nom_fuente, mi_distrito.datos_fuente[indice].coliformes);
-    } else {
-        printf("Dato inválido\n");
-    }
 }
