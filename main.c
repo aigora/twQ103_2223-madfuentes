@@ -712,17 +712,15 @@ printf("\x1B[34m|     \\/   | ||     \\ |      \\|   ___|    ||  |_| ||   ___|| 
 printf("\x1B[34m|__/\\__/|__|_||__|\\__\\|______/|___|     __||______||______||__/\\____|  |__|  |______||______|  \033[0m\n");
 printf("\x1B[34m    |_____|                      |_____|                                                       \033[0m\n");
 printf("\n\n\n");
-printf("\x1B[34m                   El programa definitivo para el an%lisis de agua \033[0m\n", 160);
+printf("\x1B[34m                   El programa definitivo para el an%clisis de agua \033[0m\n", 160);
 printf(" \n\n                       Pulse cualquier tecla para continuar");
 
 scanf("%c", &caracter);
 system("cls");
 
-    return 0;
-
-
-
+return;
 }
+
 /* Menú principal */
 void menu_principal(void)
 {
