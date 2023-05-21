@@ -32,6 +32,7 @@ struct estadisticas {
 struct distrito cargar_fichero_nuevo(char nombre_fichero[32]);
 void carga_ficheros(struct distrito distrito_cargado[100]);
 struct estadisticas obtener_valores_estadisticos(float datos_estadistica[50], int num_fuentes);
+void regresion_lineal(struct distrito distrito_cargado[12]);
 void imprimir_valores_estadisticos(struct distrito mi_distrito);
 void imprimir_fichero_mensual(struct distrito mi_distrito);
 void imprimir_dato(struct distrito mi_distrito, int indice, char *dato);
@@ -377,6 +378,62 @@ void imprimir_valores_estadisticos(struct distrito mi_distrito)
 
     return;
 }
+
+/*
+La pendiente (m) en el cálculo de la tendencia anual mediante regresión lineal se calcula de la siguiente manera:
+
+m = (n * Σ(xy) - Σx * Σy) / (n * Σ(x^2) - (Σx)^2)
+
+Donde:
+
+	n es el número de datos en la serie.
+	Σxy es la suma de los productos de los valores de los índices (x) y los valores de la serie (y).
+	Σx es la suma de los valores de los índices (x).
+	Σy es la suma de los valores de la serie (y).
+	Σ(x^2) es la suma de los cuadrados de los valores de los índices (x).
+	(Σx)^2 es el cuadrado de la suma de los valores de los índices (x).
+*/
+
+void regresion_lineal(struct distrito distrito_cargado[12]) {
+	float suma_x = 0.0f, suma_x2 = 0.0f;
+	float suma_y_pH=0.0f, suma_y_cond=0.0f, suma_y_turb=0.0f, suma_y_coli=0.0f;
+	float suma_xy_pH=0.0f, suma_xy_cond=0.0f, suma_xy_turb=0.0f, suma_xy_coli=0.0f;
+	float pH, conductividad, turbidez, coliformes;
+	int i, j;
+
+	printf("Tendencias de incrementos mensuales en %s, a partir de los datos del a%co %d\n\n", distrito_cargado[0].nom_distrito, 164, distrito_cargado[0].anio);
+	printf("%-15s %-15s %-15s %-15s %-15s\n", "Parametros", "pH", "Conductividad", "Turbidez", "Coliformes");
+
+	for (i=0; i<distrito_cargado[0].num_fuentes; i++) {
+    	for (j=0; j<12; j++) {
+        	suma_x += j+1;
+        	suma_y_pH += distrito_cargado[j].datos_fuente[i].pH;
+        	suma_xy_pH += (j+1)*distrito_cargado[j].datos_fuente[i].pH;
+        	suma_y_cond += distrito_cargado[j].datos_fuente[i].conductividad;
+        	suma_xy_cond += (j+1)*distrito_cargado[j].datos_fuente[i].conductividad;
+        	suma_y_turb += distrito_cargado[j].datos_fuente[i].turbidez;
+        	suma_xy_turb += (j+1)*distrito_cargado[j].datos_fuente[i].turbidez;
+        	suma_y_coli += distrito_cargado[j].datos_fuente[i].coliformes;
+        	suma_xy_coli += (j+1)*distrito_cargado[j].datos_fuente[i].coliformes;
+        	suma_x2 += (j+1)*(j+1);
+    	}
+
+    	// Calculamos la tendencia para los 4 parametros
+    	pH = (12*suma_xy_pH - suma_x*suma_y_pH)/(12*suma_x2 - suma_x*suma_x);
+    	conductividad = (12*suma_xy_cond - suma_x*suma_y_cond)/(12*suma_x2 - suma_x*suma_x);
+    	turbidez = (12*suma_xy_turb - suma_x*suma_y_turb)/(12*suma_x2 - suma_x*suma_x);
+    	coliformes = (12*suma_xy_coli - suma_x*suma_y_coli)/(12*suma_x2 - suma_x*suma_x);
+
+    	printf("%-15s %-15.2f %-15.2f %-15.2f %-15.2f\n", distrito_cargado[0].datos_fuente[i].nom_fuente, pH, conductividad, turbidez, coliformes);
+
+    	// reseteamos los valores de las sumas para la siguiente fuente
+    	suma_y_pH=suma_y_cond=suma_y_turb=suma_y_coli=0.0f;
+    	suma_xy_pH=suma_xy_cond=suma_xy_turb=suma_xy_coli=0.0f;
+	}
+
+	return;
+}
+
 
 /*Función para imprimir el fichero*/
 void imprimir_fichero_mensual(struct distrito mi_distrito) {
